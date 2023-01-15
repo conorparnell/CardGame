@@ -16,16 +16,16 @@ const deck = ["Lil Lindy", "Lil Lindy", "Lil Lindy", "Gavotte Trot", "Gavotte Tr
 const rivalDeck = ["Twizzle Sizzle", "Twizzle Sizzle", "Twizzle Sizzle", "Dainty Dip", "Dainty Dip", "Glissade Parade", "Mooching Mamba", "Cheer Squad"];
 
 let hand = [];
-let drawingCards = deck;
+let drawingCards = Array.from(deck);
 
 let rivalHand = [];
-let rivalCards = deck;
+let rivalCards = Array.from(deck);
 
 //New cards:
 function startTurn() {
     userBeats = 4;
     hand = [];
-    drawingCards = deck;
+    drawingCards = Array.from(deck);
     for (i = 0; i < 3; i++) {
         let draw = Math.floor(Math.random() * drawingCards.length);
         hand[i] = drawingCards[draw];
@@ -38,7 +38,7 @@ function startTurn() {
 function rivalTurn(){
     rivalBeats = 4;
     rivalHand = [];
-    rivalCards = rivalDeck;
+    rivalCards = Array.from(rivalDeck);
     for (i = 0; i < 3; i++) {
         let draw = Math.floor(Math.random() * rivalCards.length);
         rivalHand[i] = rivalCards[draw];
