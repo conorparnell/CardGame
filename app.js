@@ -1,7 +1,15 @@
+//player setup
 let userPoints = 0;
 let userHype = 0;
 let userFear = 0;
 let userBeats = 3;
+
+//rival setup
+let rivalPoints = 0;
+let rivalHype = 0;
+let rivalFear = 0;
+let rivalBeats = 3;
+
 
 
 const deck = ["Lil Lindy", "Lil Lindy", "Lil Lindy", "Gavotte Trot", "Gavotte Trot", "Flip Floss", "Takey Tap Tap", "One Step Pep", "Rhythm & Grow", "Rig-A-Jig"];
