@@ -13,9 +13,13 @@ let rivalBeats = 3;
 
 
 const deck = ["Lil Lindy", "Lil Lindy", "Lil Lindy", "Gavotte Trot", "Gavotte Trot", "Flip Floss", "Takey Tap Tap", "One Step Pep", "Rhythm & Grow", "Rig-A-Jig"];
+const rivalDeck = []
 
 let hand = [];
 let drawingCards = deck;
+
+let rivalHand = [];
+let rivalCards = deck;
 
 //New cards:
 function startTurn() {
@@ -30,6 +34,19 @@ function startTurn() {
     }
 }
 
+//Enemy turn:
+function rivalTurn(){
+    rivalBeats = 3;
+    rivalHand = [];
+    rivalCards = deck;
+    for (i = 0; i < 3; i++) {
+        let draw = Math.floor(Math.random() * rivalCards.length);
+        rivalHand[i] = rivalCards[draw];
+        rivalCards.splice(draw, 1);
+    }
+    console.log("Your opponent draws their cards.");
+    console.log(`Your opponent plays ${rivalHand[1]}`)
+}
 
 
 
