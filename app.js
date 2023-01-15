@@ -226,7 +226,7 @@ function mooching(){
 
 //Cheer Squad
 function cheer(){
-    rivalBeats -= 3;
+    rivalBeats -= 2;
     rivalHype += 1;
     console.log(`Rival gains 1 hype. Rival now has ${rivalHype} hype!`)
 }
@@ -271,7 +271,7 @@ function rivalPlay(){
         case "Mooching Mamba":
             cost = 4;
         case "Cheer Squad":
-            cost = 3;
+            cost = 2;
       }
 
       if (cost < rivalBeats){
