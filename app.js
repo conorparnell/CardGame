@@ -45,7 +45,7 @@ function rivalTurn(){
         rivalCards.splice(draw, 1);
     }
     console.log("Your opponent draws their cards.");
-    
+    rivalPlay();
 }
 
 
@@ -104,6 +104,23 @@ function flip() {
 
 //Takey Tap Tap
 function takey(){
+    checkCost(3);
+    let points = 3;
+    points += userHype;
+    points -= userFear;
+
+    if (points <= 0) {
+        points = 0;
+    }
+
+    if (rivalPoints < points) {
+        points = rivalPoints;
+    }
+
+    userPoints += points;
+    rivalPoints -= points;
+    console.log(`You steal ${points} points. You now have ${userPoints} points!`);
+    checkGame();
     
 }
 
@@ -142,6 +159,7 @@ function rhythm() {
 
 //Twizzle Sizzle
 function twizzle(){
+    rivalBeats -= 1;
     let points = 1;
     points += rivalHype;
     points -= rivalFear;
@@ -149,13 +167,14 @@ function twizzle(){
     if (points <= 0) {
         points = 0;
     }
-    userPoints += points;
-    console.log(`Your rival gains ${points} point. Rival now has ${userPoints} points!`);
+    rivalPoints += points;
+    console.log(`Your rival gains ${points} point. Rival now has ${rivalPoints} points!`);
     checkGame();
 }
 
 //Dainty Dip
 function dainty(){
+    rivalBeats -= 2;
     let points = 3;
     points += rivalHype;
     points -= rivalFear;
@@ -163,13 +182,14 @@ function dainty(){
     if (points <= 0) {
         points = 0;
     }
-    userPoints += points;
-    console.log(`Your rival gains ${points} point. Rival now has ${userPoints} points!`);
+    rivalPoints += points;
+    console.log(`Your rival gains ${points} point. Rival now has ${rivalPoints} points!`);
     checkGame();
 }
 
 //Glissade Parade
 function glissade(){
+    rivalBeats -= 3;
     let points = 5;
     points += rivalHype;
     points -= rivalFear;
@@ -177,32 +197,38 @@ function glissade(){
     if (points <= 0) {
         points = 0;
     }
-    userPoints += points;
-    console.log(`Your rival gains ${points} point. Rival now has ${userPoints} points!`);
+    rivalPoints += points;
+    console.log(`Your rival gains ${points} point. Rival now has ${rivalPoints} points!`);
     checkGame();
 
 }
 
 //Mooching Mamba
 function mooching(){
+    rivalBeats -= 4;
     let points = 3;
     points += rivalHype;
-    points += rivalFear;
+    points -= rivalFear;
 
     if (points <= 0) {
         points = 0;
     }
 
+    if (userPoints < points) {
+        points = userPoints;
+    }
 
     userPoints -= points;
-    console.log(`Your rival gains ${points} point. Rival now has ${userPoints} points!`);
+    rivalPoints += points;
+    console.log(`Your rival steals ${points} points. Rival now has ${rivalPoints} points!`);
     checkGame();
 }
 
 //Cheer Squad
 function cheer(){
+    rivalBeats -= 3;
     rivalHype += 1;
-    console.log("Rival ")
+    console.log(`Rival gains 1 hype. Rival now has ${rivalHype} hype!`)
 }
 
 //helper functions
