@@ -2,5 +2,39 @@ body {
     background-color: darkslategrey;
     text-align: center;
     height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
+header {
+    background-color: darkolivegreen;
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    height: 10%;
+}
+
+#topbar {
+    display: flex;
+}
+
+#options {
+    background-color: green;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+#something {
+    background-color: orangered;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+#placeholder {
+    background-color: grey;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
