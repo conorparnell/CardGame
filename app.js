@@ -23,13 +23,24 @@ let rivalCards = Array.from(deck);
 
 //New cards:
 function startTurn() {
+    const previousCards = document.querySelectorAll(".card");
+    previousCards.forEach(element => element.remove());
     userBeats = 4;
     hand = [];
     drawingCards = Array.from(deck);
     for (i = 0; i < 3; i++) {
         let draw = Math.floor(Math.random() * drawingCards.length);
         hand[i] = drawingCards[draw];
+        let cardPulled = drawingCards[draw];
         console.log(`${drawingCards[draw]} added to hand.`);
+        let newCard = document.createElement("div");
+        newCard.classList.add("card");
+        newCard.innerText = `${drawingCards[draw]}`;
+        newCard.addEventListener('click', () => {
+           playCard(cardPulled);
+        });
+        const gameBoard = document.getElementById("gameboard");
+        gameBoard.appendChild(newCard);
         drawingCards.splice(draw, 1);
     }
 }
@@ -53,6 +64,32 @@ function rivalTurn(){
 
 
 //Player Card Functions:
+
+function playCard(cardName){
+    switch(cardName) {
+        case "Lil Lindy":
+          lindy();
+          break;
+        case "Gavotte Trot":
+          gavotte();
+          break;
+        case "Flip Floss":
+            flip();
+            break;
+        case "Takey Tap Tap":
+            takey();
+            break;
+        case "One Step Pep":
+            pep();
+            break;
+        case "Rhythm & Grow":
+            rhythm();
+            break;
+        case "Rig-A-Jig":
+            rig();
+            break;
+      }
+}
 
 //Lil Lindy
 function lindy() {
