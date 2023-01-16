@@ -37,7 +37,7 @@ function startTurn() {
         newCard.classList.add("card");
         newCard.innerText = `${drawingCards[draw]}`;
         newCard.addEventListener('click', () => {
-           playCard(cardPulled);
+            playCard(cardPulled);
         });
         newCard.addEventListener('click', removeCard);
         const gameBoard = document.getElementById("gameboard");
@@ -47,7 +47,7 @@ function startTurn() {
 }
 
 //Enemy turn:
-function rivalTurn(){
+function rivalTurn() {
     rivalBeats = 4;
     rivalHand = [];
     rivalCards = Array.from(rivalDeck);
@@ -64,20 +64,20 @@ function rivalTurn(){
 
 function removeCard(e) {
     var element = e.target;
-    
+
     element.remove();
-  }
+}
 
 //Player Card Functions:
 
-function playCard(cardName){
-    switch(cardName) {
+function playCard(cardName) {
+    switch (cardName) {
         case "Lil Lindy":
-          lindy();
-          break;
+            lindy();
+            break;
         case "Gavotte Trot":
-          gavotte();
-          break;
+            gavotte();
+            break;
         case "Flip Floss":
             flip();
             break;
@@ -93,7 +93,7 @@ function playCard(cardName){
         case "Rig-A-Jig":
             rig();
             break;
-      }
+    }
 }
 
 //Lil Lindy
@@ -145,25 +145,25 @@ function flip() {
 }
 
 //Takey Tap Tap
-function takey(){
-    checkCost(3);
-    let points = 3;
-    points += userHype;
-    points -= userFear;
+function takey() {
+    if (checkCost(3)) {
+        let points = 3;
+        points += userHype;
+        points -= userFear;
 
-    if (points <= 0) {
-        points = 0;
+        if (points <= 0) {
+            points = 0;
+        }
+
+        if (rivalPoints < points) {
+            points = rivalPoints;
+        }
+
+        userPoints += points;
+        rivalPoints -= points;
+        console.log(`You steal ${points} points. You now have ${userPoints} points!`);
+        checkGame();
     }
-
-    if (rivalPoints < points) {
-        points = rivalPoints;
-    }
-
-    userPoints += points;
-    rivalPoints -= points;
-    console.log(`You steal ${points} points. You now have ${userPoints} points!`);
-    checkGame();
-    
 }
 
 //One Step Pep
@@ -200,7 +200,7 @@ function rhythm() {
 //Rival Card Functions
 
 //Twizzle Sizzle
-function twizzle(){
+function twizzle() {
     rivalBeats -= 1;
     let points = 1;
     points += rivalHype;
@@ -215,7 +215,7 @@ function twizzle(){
 }
 
 //Dainty Dip
-function dainty(){
+function dainty() {
     rivalBeats -= 2;
     let points = 3;
     points += rivalHype;
@@ -230,7 +230,7 @@ function dainty(){
 }
 
 //Glissade Parade
-function glissade(){
+function glissade() {
     rivalBeats -= 3;
     let points = 5;
     points += rivalHype;
@@ -246,7 +246,7 @@ function glissade(){
 }
 
 //Mooching Mamba
-function mooching(){
+function mooching() {
     rivalBeats -= 4;
     let points = 3;
     points += rivalHype;
@@ -267,7 +267,7 @@ function mooching(){
 }
 
 //Cheer Squad
-function cheer(){
+function cheer() {
     rivalBeats -= 2;
     rivalHype += 1;
     console.log(`Rival gains 1 hype. Rival now has ${rivalHype} hype!`)
@@ -296,48 +296,49 @@ function checkCost(cardCost) {
 
 //Enemy turn
 
-function rivalPlay(){
-    for (i = 0; i < rivalHand.length; i++){
-    let cost = 0;
+function rivalPlay() {
+    for (i = 0; i < rivalHand.length; i++) {
+        let cost = 0;
 
-    switch(rivalHand[i]) {
-        case "Twizzle Sizzle":
-          cost = 1;
-          break;
-        case "Dainty Dip":
-          cost = 2;
-          break;
-        case "Glissade Parade":
-            cost = 3;
-            break;
-        case "Mooching Mamba":
-            cost = 4;
-        case "Cheer Squad":
-            cost = 2;
-      }
+        switch (rivalHand[i]) {
+            case "Twizzle Sizzle":
+                cost = 1;
+                break;
+            case "Dainty Dip":
+                cost = 2;
+                break;
+            case "Glissade Parade":
+                cost = 3;
+                break;
+            case "Mooching Mamba":
+                cost = 4;
+            case "Cheer Squad":
+                cost = 2;
+        }
 
-      if (cost < rivalBeats){
-          console.log(`Rival plays ${rivalHand[i]}`);
-      switch(rivalHand[i]) {
-        case "Twizzle Sizzle":
-          twizzle();
-          break;
-        case "Dainty Dip":
-          dainty();
-          break;
-        case "Glissade Parade":
-            glissade();
-            break;
-        case "Mooching Mamba":
-            mooching();
-        case "Cheer Squad":
-            cheer();
-      }}
+        if (cost < rivalBeats) {
+            console.log(`Rival plays ${rivalHand[i]}`);
+            switch (rivalHand[i]) {
+                case "Twizzle Sizzle":
+                    twizzle();
+                    break;
+                case "Dainty Dip":
+                    dainty();
+                    break;
+                case "Glissade Parade":
+                    glissade();
+                    break;
+                case "Mooching Mamba":
+                    mooching();
+                case "Cheer Squad":
+                    cheer();
+            }
+        }
 
     }
 }
 
-function displayCards(){
+function displayCards() {
     //
 }
 
