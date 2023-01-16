@@ -39,6 +39,7 @@ function startTurn() {
         newCard.addEventListener('click', () => {
            playCard(cardPulled);
         });
+        newCard.addEventListener('click', removeCard);
         const gameBoard = document.getElementById("gameboard");
         gameBoard.appendChild(newCard);
         drawingCards.splice(draw, 1);
@@ -61,7 +62,11 @@ function rivalTurn(){
 
 
 
-
+function removeCard(e) {
+    var element = e.target;
+    
+    element.remove();
+  }
 
 //Player Card Functions:
 
