@@ -295,3 +295,12 @@ function rivalPlay(){
     }
 }
 
+function displayCards(){
+    //
+}
+
+// while (true) {
+//     startTurn();
+//     rivalTurn();
+// }
+
