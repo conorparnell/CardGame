@@ -304,3 +304,7 @@ function displayCards(){
 //     rivalTurn();
 // }
 
+const orangeDiv = document.getElementById("something");
+orangeDiv.addEventListener('click', startTurn);
+const greenDiv = document.getElementById("options");
+greenDiv.addEventListener('click', rivalTurn);
