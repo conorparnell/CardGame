@@ -408,7 +408,7 @@ let tempArr = [
 
     
 ];
-
+userBeats = 4;
 drawingCards = Array.from(tempArr);
     for (i = 0; i < 3; i++) {
         let draw = Math.floor(Math.random() * drawingCards.length);
