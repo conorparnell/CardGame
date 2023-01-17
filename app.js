@@ -63,8 +63,8 @@ function rivalTurn() {
 
 
 function removeCard(e) {
-    var element = e.target;
-
+    let element = e.currentTarget;
+    e
     element.remove();
 }
 
@@ -363,7 +363,8 @@ let tempArr = [
         cardTitle: "Lil Lindy",
         cardCost: 1,
         cardText: "Gain 2 points",
-        cardFunc: lindy(),
+        cardFunc: lindy,
+        cardImg: ""
     }
 ];
 
@@ -371,8 +372,7 @@ drawingCards = Array.from(tempArr);
     for (i = 0; i < 3; i++) {
         let draw = Math.floor(Math.random() * drawingCards.length);
         hand[i] = drawingCards[draw];
-        let cardPulled = drawingCards[draw];
-        console.log(`${hand[i].cardTitle} added to hand.`);
+        let cardPulled = hand[i];
         let newCard = document.createElement("div");
         newCard.classList.add("card");
 
@@ -380,7 +380,7 @@ drawingCards = Array.from(tempArr);
         let cardTitleDiv = document.createElement("div");
         cardTitleDiv.classList.add("card-title");
         let cardNamePara = document.createElement("p");
-        cardNamePara.innerText = `${hand[i].cardTitle}`;
+        cardNamePara.innerText = `${cardPulled.cardTitle}`;
 
         let cardCostPara = document.createElement("p");
         cardCostPara.innerText = `${hand[i].cardCost}`;
@@ -399,7 +399,7 @@ drawingCards = Array.from(tempArr);
         newCard.appendChild(cardImgDiv);
         newCard.appendChild(cardTextDiv);
 
-        newCard.addEventListener('click', hand[i].cardFunc);
+        newCard.addEventListener('click', () => {playCard(cardPulled.cardTitle)});
         newCard.addEventListener('click', removeCard);
         const gameBoard = document.getElementById("gameboard");
         gameBoard.appendChild(newCard);
