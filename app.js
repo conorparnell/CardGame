@@ -110,8 +110,8 @@ function lindy() {
         if (points <= 0) {
             points = 0;
         }
-        userPoints += points;
         console.log(`You gain ${points} points. You now have ${userPoints} points!`);
+        updatePlayerScore(points);
         checkGame();
     }
 }
@@ -126,8 +126,8 @@ function gavotte() {
         if (points <= 0) {
             points = 0;
         }
-        userPoints += points;
         console.log(`You gain ${points} points. You now have ${userPoints} points!`);
+        updatePlayerScore(points);
         checkGame();
     }
 }
@@ -352,13 +352,13 @@ function displayCards() {
 // }
 
 const orangeDiv = document.getElementById("something");
-orangeDiv.addEventListener('click', startTurn);
+orangeDiv.addEventListener('click', testNewCards);
 const greenDiv = document.getElementById("options");
 greenDiv.addEventListener('click', rivalTurn);
 const greyDiv = document.getElementById("placeholder");
 //greyDiv.addEventListener('click', )
 
-
+//["Lil Lindy", "Lil Lindy", "Lil Lindy", "Gavotte Trot", "Gavotte Trot", "Flip Floss", "Takey Tap Tap", "One Step Pep", "Rhythm & Grow", "Rig-A-Jig"];
 
 function testNewCards(){
 
@@ -366,24 +366,47 @@ let tempArr = [
     {
         cardTitle: "Lil Lindy",
         cardCost: 1,
-        cardText: "Gain 2 points",
+        cardText: `Gain ${2+userHype-userFear} points`,
         cardFunc: lindy,
         cardImg: ""
     },
     {
         cardTitle: "Lil Lindy",
         cardCost: 1,
-        cardText: "Gain 2 points",
+        cardText: `Gain ${2+userHype-userFear} points`,
         cardFunc: lindy,
         cardImg: ""
     },
     {
         cardTitle: "Lil Lindy",
         cardCost: 1,
-        cardText: "Gain 2 points",
+        cardText: `Gain ${2+userHype-userFear} points`,
         cardFunc: lindy,
         cardImg: ""
-    }
+    },
+    {
+        cardTitle: "Gavotte Trot",
+        cardCost: 2,
+        cardText: `Gain ${4+userHype-userFear} points`,
+        cardFunc: gavotte,
+        cardImg: ""
+    },
+    {
+        cardTitle: "Gavotte Trot",
+        cardCost: 2,
+        cardText: `Gain ${4+userHype-userFear} points`,
+        cardFunc: gavotte,
+        cardImg: ""   
+    },
+    {
+        cardTitle: "One Step Pep",
+        cardCost: 2,
+        cardText: `Gain 1 Hype`,
+        cardFunc: pep,
+        cardImg: ""   
+    },
+
+    
 ];
 
 drawingCards = Array.from(tempArr);
