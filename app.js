@@ -1,18 +1,329 @@
-//player setup
-let userPoints = 0;
-let userHype = 0;
-let userFear = 0;
-let userBeats = 4;
+//gameplay variables
+const startingHandSize = 4;
+const startingBrawn = 4;
+const winningScore = 30;
+let userTurn = true; //boolean for whose turn it is. user = true, rival = false;
 
+//USER setup - "User" to be used in all places, no more "Player"
+let userBones = 0;
+let userBrawn = 0;
+let userCheer = 0;
+let userFear = 0;
+
+//RIVAL setup
+let rivalBones = 0;
+let rivalBrawn = 0;
+let rivalCheer = 0;
+let rivalFear = 0;
+
+/*
+CARD IDs:
+1 - Dredge
+2 - Excavate
+3 - Exhume
+4 - Yoink
+5 - Will-o'-the-Wisp
+6 - Banshee Wail
+7 - Sláinte!
+8 - Bone Jump
+9 - Hearty Haul
+10 - Gold Teeth
+11-100 - <reserved>
+...
+
+101 - <the Morrigan card 1>
+102 - <the Morrigan card 2> - raven? 
+103 - <the Morrigan card 3>
+104 - <Old Croghan card 1>
+105 - <Old Croghan card 2>
+106 - <Old Croghan card 3>
+107 - <Cú Chulainn card 1>
+108 - <Cú Chulainn card 2>
+109 - <Cú Chulainn card 3> Gae Bolg
+110 - <Stingy Jack card 1>
+111 - <Stingy Jack card 2> Trick or Treat - give fear steal cheer?
+112 - <Stingy Jack card 3>
+
+STRETCH GOAL: THE POOKA
+
+*/
+
+//BASIC DECK:
+const basicDeck = [
+    {
+        cardId: 1,
+        cardName: "Dredge",
+        cardCost: 1,
+        cardImg: "",
+        cardText: `Find ${calculateBones(2)} bones.`,
+        cardType: "basic",
+        cardCopies: 3
+    },
+    {
+        cardId: 2,
+        cardName: "Excavate",
+        cardCost: 2,
+        cardImg: "",
+        cardText: `Find ${calculateBones(4)} bones.`,
+        cardType: "basic",
+        cardCopies: 2
+    },
+    {
+        cardId: 3,
+        cardName: "Exhume",
+        cardCost: 3,
+        cardImg: "",
+        cardText: `Find ${calculateBones(7)} bones.`,
+        cardType: "basic",
+        cardCopies: 1
+    },
+    {
+        cardId: 4,
+        cardName: "Yoink",
+        cardCost: 3,
+        cardImg: "",
+        cardText: `Steal ${calculateBones(3)} bones.`,
+        cardType: "basic",
+        cardCopies: 1
+    },
+    {
+        cardId: 5,
+        cardName: "Will-o'-the-Wisp",
+        cardCost: 2,
+        cardImg: "",
+        cardText: "Gain 1 cheer.",
+        cardType: "basic",
+        cardCopies: 1
+    },
+    {
+        cardId: 6,
+        cardName: "Banshee Wail",
+        cardCost: 2,
+        cardImg: "",
+        cardText: "Your opponent gains 1 fear.",
+        cardType: "basic",
+        cardCopies: 1
+    },
+    {
+        cardId: 7,
+        cardName: "Sláinte!",
+        cardCost: 0,
+        cardImg: "",
+        cardText: "Gain 1 brawn.",
+        cardType: "basic",
+        cardCopies: 1
+    },
+    {
+        cardId: 8,
+        cardName: "Bone Jump",
+        cardCost: 1,
+        cardImg: "",
+        cardText: "Draw 1 card",
+        cardType: "basic",
+        cardCopies: 1
+    },
+    {
+        cardId: 9,
+        cardName: "Hearty Haul",
+        cardCost: 2,
+        cardImg: "",
+        cardText: `Find ${calculateBones(2)} bones, remove 1 fear.`,
+        cardType: "basic",
+        cardCopies: 1
+    },
+    {
+        cardId: 10, 
+        cardName: "Gold Teeth",
+        cardCost: 3,
+        cardImg: "",
+        cardText: `Find ${calculateBones(3)} bones, gain 1 cheer.`,
+        cardType: "basic",
+        cardCopies: 1
+    }
+];
+
+//SPECIAL DECKS:
+//To be implemented once designed
+
+/*
+
+//the Morrigan:
+const morriganDeck = [
+    {
+        cardId: 101,
+        cardName: 
+        cardCost: 
+        cardImg: "",
+        cardText: 
+        cardType: "morrigan",
+        cardCopies: 2,
+    },
+    {
+        cardId: 102,
+        cardName: 
+        cardCost: 
+        cardImg: "",
+        cardText: 
+        cardType: "morrigan",
+        cardCopies: 1,
+    },
+    {
+        cardId: 103,
+        cardName: 
+        cardCost: 
+        cardImg: "",
+        cardText: 
+        cardType: "morrigan",
+        cardCopies: 1
+    }
+];
+
+//Old Croghan:
+const croghanDeck = [
+    {
+        cardId: 104,
+        cardName: 
+        cardCost: 
+        cardImg: "",
+        cardText: 
+        cardType: "croghan",
+        cardCopies: 2,
+    },
+    {
+        cardId: 105,
+        cardName: 
+        cardCost: 
+        cardImg: "",
+        cardText: 
+        cardType: "croghan",
+        cardCopies: 1,
+    },
+    {
+        cardId: 106,
+        cardName: 
+        cardCost: 
+        cardImg: "",
+        cardText: 
+        cardType: "croghan",
+        cardCopies: 1
+    }
+];
+
+//Cú Chulainn
+const chulainnDeck = [
+    {
+        cardId: 107,
+        cardName: 
+        cardCost: 
+        cardImg: "",
+        cardText: 
+        cardType: "chulainn",
+        cardCopies: 2,
+    },
+    {
+        cardId: 108,
+        cardName: 
+        cardCost: 
+        cardImg: "",
+        cardText: 
+        cardType: "chulainn",
+        cardCopies: 1,
+    },
+    {
+        cardId: 109,
+        cardName: 
+        cardCost: 
+        cardImg: "",
+        cardText: 
+        cardType: "chulainn",
+        cardCopies: 1
+    }
+];
+
+//Stingy Jack:
+const jackDeck = [
+    {
+        cardId: 110,
+        cardName: 
+        cardCost: 
+        cardImg: "",
+        cardText: 
+        cardType: "jack",
+        cardCopies:
+    },
+    {
+        cardId: 111,
+        cardName: 
+        cardCost: 
+        cardImg: "",
+        cardText: 
+        cardType: "jack",
+        cardCopies:
+    },
+    {
+        cardId: 112,
+        cardName: 
+        cardCost: 
+        cardImg: "",
+        cardText: 
+        cardType: "jack",
+        cardCopies:
+    }
+];
+
+*/
+
+//Game Setup
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function calculateBones(num, player){
+    let bones = num;
+
+    if (player) {
+        bones += userCheer;
+        bones -= userFear;
+        if (bones < 0){
+            bones = 0;
+        }
+        return bones;
+    } else {
+        bones += userCheer;
+        bones -= userFear;
+        if (bones < 0){
+            bones = 0;
+        }
+        return bones;
+    }
+}
+
+
+
+
+
+
+//move this to be with player score keeper
+//rename to be themed?
 window.addEventListener('DOMContentLoaded', (event) => {
     updatePlayerScore(0);
 });
 
-//rival setup
-let rivalPoints = 0;
-let rivalHype = 0;
-let rivalFear = 0;
-let rivalBeats = 4;
+
 
 
 
@@ -63,7 +374,6 @@ function rivalTurn() {
     console.log("Your opponent draws their cards.");
     rivalPlay();
 }
-
 
 
 function removeCard(e) {
@@ -293,7 +603,6 @@ function checkCost(cardCost) {
         console.log("Not enough beats to play that card!");
         return false;
     } else {
-        userBeats -= cardCost;
         return true;
     }
 }
@@ -361,6 +670,8 @@ const greyDiv = document.getElementById("placeholder");
 //["Lil Lindy", "Lil Lindy", "Lil Lindy", "Gavotte Trot", "Gavotte Trot", "Flip Floss", "Takey Tap Tap", "One Step Pep", "Rhythm & Grow", "Rig-A-Jig"];
 
 function testNewCards(){
+    const previousCards = document.querySelectorAll(".card");
+    previousCards.forEach(element => element.remove());
 
 let tempArr = [
     {
@@ -426,6 +737,7 @@ drawingCards = Array.from(tempArr);
 
         let cardCostPara = document.createElement("p");
         cardCostPara.innerText = `${cardPulled.cardCost}`;
+        cardCostPara.classList.add("cost");
         cardTitleDiv.appendChild(cardNamePara);
         cardTitleDiv.appendChild(cardCostPara);
 
@@ -442,7 +754,11 @@ drawingCards = Array.from(tempArr);
         newCard.appendChild(cardTextDiv);
 
         newCard.addEventListener('click', () => {playCard(cardPulled.cardTitle)});
-        newCard.addEventListener('click', removeCard);
+        newCard.addEventListener('click', (e) => {
+            if (checkCost(cardPulled.cardCost)) {
+                removeCard(e);
+            }
+        });
         const gameBoard = document.getElementById("gameboard");
         gameBoard.appendChild(newCard);
         drawingCards.splice(draw, 1);

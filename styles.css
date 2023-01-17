@@ -59,6 +59,13 @@ header {
     
 }
 
+.cost {
+    background-color: black;
+    border-radius: 50%;
+    height: 1.2em;
+    width: 1.2em;
+  }
+
 .card:hover {
     border-color: goldenrod;
     height: 300px;
@@ -115,3 +122,25 @@ main {
 .score{
     position: fixed;
 }
+
+.morrigan {
+    background-color: rgb(80, 0, 80);
+    color: gold;
+}
+
+.croghan {
+    background-color: rgb(95, 29, 12);
+    color: gold;
+}
+
+.chulainn {
+    background-color: rgb(3, 80, 0);
+    color: gold;
+}
+
+.jack {
+    background-color: rgb(180, 78, 10);
+    color: gold;
+}
+
+
