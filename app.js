@@ -4,6 +4,10 @@ let userHype = 0;
 let userFear = 0;
 let userBeats = 4;
 
+window.addEventListener('DOMContentLoaded', (event) => {
+    updatePlayerScore(0);
+});
+
 //rival setup
 let rivalPoints = 0;
 let rivalHype = 0;
@@ -365,6 +369,20 @@ let tempArr = [
         cardText: "Gain 2 points",
         cardFunc: lindy,
         cardImg: ""
+    },
+    {
+        cardTitle: "Lil Lindy",
+        cardCost: 1,
+        cardText: "Gain 2 points",
+        cardFunc: lindy,
+        cardImg: ""
+    },
+    {
+        cardTitle: "Lil Lindy",
+        cardCost: 1,
+        cardText: "Gain 2 points",
+        cardFunc: lindy,
+        cardImg: ""
     }
 ];
 
@@ -373,6 +391,7 @@ drawingCards = Array.from(tempArr);
         let draw = Math.floor(Math.random() * drawingCards.length);
         hand[i] = drawingCards[draw];
         let cardPulled = hand[i];
+
         let newCard = document.createElement("div");
         newCard.classList.add("card");
 
@@ -383,7 +402,7 @@ drawingCards = Array.from(tempArr);
         cardNamePara.innerText = `${cardPulled.cardTitle}`;
 
         let cardCostPara = document.createElement("p");
-        cardCostPara.innerText = `${hand[i].cardCost}`;
+        cardCostPara.innerText = `${cardPulled.cardCost}`;
         cardTitleDiv.appendChild(cardNamePara);
         cardTitleDiv.appendChild(cardCostPara);
 
@@ -392,7 +411,7 @@ drawingCards = Array.from(tempArr);
 
         let cardTextDiv = document.createElement("div");
         cardTextDiv.classList.add("card-text");
-        cardTextDiv.innerText = `${hand[i].cardText}`;
+        cardTextDiv.innerText = `${cardPulled.cardText}`;
         
 
         newCard.appendChild(cardTitleDiv);
@@ -406,4 +425,13 @@ drawingCards = Array.from(tempArr);
         drawingCards.splice(draw, 1);
     }
 
+}
+
+
+function updatePlayerScore(points){
+    const playerScore = document.getElementById('player-score');
+    const playerScoreBar = document.getElementById('playerScore');
+    userPoints = userPoints + points;
+    playerScore.innerText = `${userPoints}`;
+    playerScoreBar.setAttribute('value', `${userPoints}`);
 }

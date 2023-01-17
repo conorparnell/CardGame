@@ -111,3 +111,7 @@ main {
     margin-top: 20%;
     margin-bottom: 5%;
 }
+
+.score{
+    position: fixed;
+}
