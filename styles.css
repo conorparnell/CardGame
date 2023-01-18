@@ -21,7 +21,9 @@ h1 {
 
 #topbar {
     display: flex;
+    align-items: center;
 }
+
 
 #options {
     background-color: green;
@@ -149,4 +151,7 @@ main {
     color: gold;
 }
 
+#user-score-bar {
+    margin-right: 80px;
+}
 

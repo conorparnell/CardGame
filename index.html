@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PeatBone!</title>
+    <title>PeatBone</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -13,16 +13,20 @@
     <header>
         <h1>PeatBone</h1>
         <div id="topbar">
-            <div id="options">rival turn</div>
-            <div id="something">start turn</div>
-            <div id="placeholder">new game</div>
+            <div id="options"><p>green button</p></div>
+            <div id="something"><p>orange button</p></div>
+            <div id="placeholder"><p>grey button</p></div>
         </div>
     </header>
 
     <main>
        
-        <div class="score">Score: <span id="player-score"></span>
-            <progress max=30 min=0 value=0 id="playerScore"></progress></div>
+        <div class="score">
+            (Score: <span id="user-score"></span>)<br>
+            (Brawn: <span id="user-brawn"></span>)<br>
+            (Cheer: <span id="user-cheer"></span>)<br>
+            (Fear: <span id="user-fear"></span>)<br>
+            <progress max=30 min=0 value=0 id="user-score-bar"></progress></div>
         <!--Rival score: <span id="rival-score"></span>-->
         <div id="gameboard">
         
