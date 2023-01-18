@@ -19,8 +19,7 @@ let rivalFear = 0;
 
 //initialize scorekeeping
 window.addEventListener('DOMContentLoaded', (event) => {
-    updateScore();
-    updateBrawn();
+    updateAllStats();
 });
 
 
@@ -30,9 +29,9 @@ CARD IDs:
 2 - Excavate
 3 - Exhume
 4 - Yoink
-5 - Will-o'-the-Wisp
+5 - Sláinte!
 6 - Banshee Wail
-7 - Sláinte!
+7 - Will-o'-the-Wisp
 8 - Bone Jump
 9 - Hearty Haul
 10 - Gold Teeth
@@ -230,7 +229,7 @@ const basicDeck = [
     },
     {
         cardId: 5,
-        cardName: "Will-o'-the-Wisp",
+        cardName: "Sláinte!",
         cardCost: 2,
         cardImg: "",
         cardText: "Gain 1 cheer.",
@@ -248,7 +247,7 @@ const basicDeck = [
     },
     {
         cardId: 7,
-        cardName: "Sláinte!",
+        cardName: "Will-o'-the-Wisp",
         cardCost: 0,
         cardImg: "",
         cardText: "Gain 1 brawn.",
@@ -515,8 +514,7 @@ function displayCard(card) {
         if (checkCost(card.cardCost)) {
             playCard(card.cardId);
             payCost(card.cardCost);
-            updateScore();
-            updateBrawn();
+            updateAllStats();
             removeCard(e);
             if (userTurn) {
                 let cardIndex = userHand.indexOf(card);
@@ -753,4 +751,25 @@ function updateBrawn(){
     //const rivalBrawnAmount = document.getElementById('rival-brawn');
     userBrawnAmount.innerText = `${userBrawn}`;
     //rivalBrawnAmount.innerText = `${rivalBrawn}`;
+}
+
+function updateCheer(){
+    const userCheerAmount = document.getElementById('user-cheer');
+    //rival
+    userCheerAmount.innerText = `${userCheer}`;
+    //rival
+}
+
+function updateFear(){
+    const userFearAmount = document.getElementById('user-fear');
+    //rival
+    userFearAmount.innerText = `${userFear}`;
+    //rival
+}
+
+function updateAllStats(){
+    updateScore();
+    updateBrawn();
+    updateCheer();
+    updateFear();
 }
