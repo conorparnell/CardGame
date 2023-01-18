@@ -16,6 +16,13 @@ let rivalBrawn = startingBrawn;
 let rivalCheer = 0;
 let rivalFear = 0;
 
+//initialize scorekeeping
+window.addEventListener('DOMContentLoaded', (event) => {
+    updateUserScore(0);
+    userRivalScore(0);
+});
+
+
 /*
 CARD IDs:
 1 - Dredge
@@ -31,22 +38,156 @@ CARD IDs:
 11-100 - <reserved>
 ...
 
-101 - <the Morrigan card 1>
+101 - <the Morrigan card 1> gives 2 fear
 102 - <the Morrigan card 2> - raven? 
 103 - <the Morrigan card 3> - shapeshift - steal and play a card of your opponent's special deck
-104 - <Old Croghan card 1>
-105 - <Old Croghan card 2>
-106 - <Old Croghan card 3>
-107 - <Cú Chulainn card 1>
-108 - <Cú Chulainn card 2>
-109 - <Cú Chulainn card 3> Gae Bolg
-110 - <Stingy Jack card 1>
-111 - <Stingy Jack card 2> Trick or Treat - give fear steal cheer?
+104 - <Old Croghan card 1> fisticuffs
+105 - <Old Croghan card 2> leather band
+106 - <Old Croghan card 3> 
+107 - <Cú Chulainn card 1> gain 2 cheer battlecry
+108 - <Cú Chulainn card 2> 
+109 - <Cú Chulainn card 3> Gae Bolg - reduce rival bones by half rounded up
+110 - <Stingy Jack card 1> trick or treat - give fear steal cheer
+111 - <Stingy Jack card 2> 
 112 - <Stingy Jack card 3>
 
 STRETCH GOAL: THE POOKA
 
 */
+
+
+function playCard(id) {
+    switch (id) {
+        case 1:
+            gain(calculateBones(2));
+            break;
+        case 2:
+            gain(calculateBones(4));
+            break;
+        case 3:
+            gain(calculateBones(7));
+            break;
+        case 4:
+            steal(3);
+            break;
+        case 5:
+            cheer(1);
+            break;
+        case 6:
+            fear(1);
+            break;
+        case 7:
+            brawn(1);
+            break;
+        case 8:
+            drawCards(1);
+            if (userTurn) {
+                displayCard(userHand[userHand.length - 1]);
+            }
+            break;
+        case 9:
+            gain(calculateBones(2));
+            calm(1);
+            break;
+        case 10:
+            gain(calculateBones(3));
+            cheer(1);
+            break;
+    }
+}
+
+//CARD ABILITY FUNCTIONS
+
+//gains bones 
+function gain(num) {
+    let bones = num;
+    if (userTurn) {
+        userBones += bones;
+    } else {
+        rivalBones += bones;
+    }
+}
+
+//steals bones
+function steal(num) {
+    if (userTurn) {
+        if (rivalBones < num) {
+            let bones = rivalBones;
+            gain(bones);
+            reduce(bones);
+        } else {
+            gain(bones);
+            reduce(bones);
+        }
+    } else {
+        if (userBones < num) {
+            let bones = userBones;
+            gain(bones);
+            reduce(bones);
+        } else {
+            gain(bones);
+            reduce(bones);
+        }
+    }
+}
+
+//increases cheer of user
+function cheer(num) {
+    if (userTurn) {
+        userCheer += num;
+    } else {
+        rivalCheer += num;
+    }
+}
+
+//gives opponent fear
+function fear(num) {
+    if (userTurn) {
+        rivalFear += num;
+    } else {
+        userFear += num;
+    }
+}
+
+//increases brawn of the user
+function brawn(num) {
+    if (userTurn) {
+        userBrawn += num;
+    } else {
+        rivalBrawn += num;
+    }
+}
+
+//reduces fear of the user
+function calm(num) {
+    if (userTurn) {
+        userFear -= num;
+        if (userFear < 0) {
+            userFear = 0;
+        }
+    } else {
+        rivalFear -= num;
+        if (rivalFear < 0) {
+            rivalFear = 0;
+        }
+    }
+}
+
+//reduces bones of opponent
+function reduce(num) {
+    if (userTurn) {
+        rivalBones -= num;
+        if (rivalBones < 0) {
+            rivalBones = 0;
+        }
+    } else {
+        userBones -= num;
+        if (userBones < 0) {
+            userBones = 0;
+        }
+    }
+}
+
 
 //BASIC DECK:
 const basicDeck = [
@@ -55,7 +196,7 @@ const basicDeck = [
         cardName: "Dredge",
         cardCost: 1,
         cardImg: "",
-        cardText: `Find ${calculateBones(2, userTurn)} bones.`,
+        cardText: `Find ${calculateBones(2)} bones.`,
         cardType: "basic",
         cardCopies: 3
     },
@@ -64,7 +205,7 @@ const basicDeck = [
         cardName: "Excavate",
         cardCost: 2,
         cardImg: "",
-        cardText: `Find ${calculateBones(4, userTurn)} bones.`,
+        cardText: `Find ${calculateBones(4)} bones.`,
         cardType: "basic",
         cardCopies: 2
     },
@@ -73,7 +214,7 @@ const basicDeck = [
         cardName: "Exhume",
         cardCost: 3,
         cardImg: "",
-        cardText: `Find ${calculateBones(7, userTurn)} bones.`,
+        cardText: `Find ${calculateBones(7)} bones.`,
         cardType: "basic",
         cardCopies: 1
     },
@@ -82,7 +223,7 @@ const basicDeck = [
         cardName: "Yoink",
         cardCost: 3,
         cardImg: "",
-        cardText: `Steal ${calculateBones(3, userTurn)} bones.`,
+        cardText: `Steal ${calculateBones(3)} bones.`,
         cardType: "basic",
         cardCopies: 1
     },
@@ -127,7 +268,7 @@ const basicDeck = [
         cardName: "Hearty Haul",
         cardCost: 2,
         cardImg: "",
-        cardText: `Find ${calculateBones(2, userTurn)} bones. \nRemove 1 fear.`,
+        cardText: `Find ${calculateBones(2)} bones. \nRemove 1 fear.`,
         cardType: "basic",
         cardCopies: 1
     },
@@ -136,7 +277,7 @@ const basicDeck = [
         cardName: "Gold Teeth",
         cardCost: 3,
         cardImg: "",
-        cardText: `Find ${calculateBones(3, userTurn)} bones. \nGain 1 cheer.`,
+        cardText: `Find ${calculateBones(3)} bones. \nGain 1 cheer.`,
         cardType: "basic",
         cardCopies: 1
     }
@@ -249,7 +390,7 @@ const jackDeck = [
         cardImg: "",
         cardText: 
         cardType: "jack",
-        cardCopies:
+        cardCopies: 2
     },
     {
         cardId: 111,
@@ -258,7 +399,7 @@ const jackDeck = [
         cardImg: "",
         cardText: 
         cardType: "jack",
-        cardCopies:
+        cardCopies: 1
     },
     {
         cardId: 112,
@@ -267,7 +408,7 @@ const jackDeck = [
         cardImg: "",
         cardText: 
         cardType: "jack",
-        cardCopies:
+        cardCopies: 1
     }
 ];
 
@@ -286,24 +427,34 @@ let rivalHand = [];
 
 
 //GAME LOOP:
-//while (gameOver)
-//User Turn
-//Brawn refilled
-refillBrawn();
-//Draw cards
-drawCards();
-//display hand
-displayHand();
+//while (gameOver) {
+   // while (userTurn) {
+        //User Turn
+        //Brawn refilled
+        refillBrawn();
+        //Draw cards
+        drawCards(startingHandSize);
+        //display hand
+        displayHand();
+        //play cards
+        //endTurn -> remove all card elements, flush hand, refill remaining deck
+  //  }
+    //pass turn -> userTurn = false
+    //rival brawn refilled
+    //rival draws cards
+    //rival plays cards
+    //pass turn -> userTurn = true
+    userTurn = true;
+//}
+//
 
-//play cards
-//endTurn -> remove all card elements, flush hand, refill remaining deck
-//pass turn -> userTurn = false
-//rival brawn refilled
-//rival draws cards
-//rival plays cards
-//pass turn -> userTurn = true
-
-
+function passTurn(){
+    userTurn = false;
+    let allCards = document.querySelectorAll(".card");
+    allCards.forEach(element => element.remove());
+    userHand = [];
+    userRemainingDeck = Array.from(userDeck);
+}
 
 //logic to display a card on the gameboard
 function displayCard(card) {
@@ -349,9 +500,13 @@ function displayCard(card) {
 
     //add event listeners for clicking - one for card ability, one for card removal
     newCard.addEventListener('click', (e) => {
-        if (checkCost(card.cardCost)){
+        if (checkCost(card.cardCost)) {
             playCard(card.cardId);
             removeCard(e);
+            if (userTurn) {
+                let cardIndex = userHand.indexOf(card);
+                userHand.splice(cardIndex, 1);
+            }
         }
     });
 
@@ -361,26 +516,23 @@ function displayCard(card) {
 }
 
 //check if card is playable
-function checkCost(cost){
-    if (userTurn){
-        if (cost > userBrawn){
-            return false; 
+function checkCost(cost) {
+    if (userTurn) {
+        if (cost > userBrawn) {
+            return false;
         } else {
             return true;
         }
     } else {
-        if (cost > rivalBrawn){
-            return false; 
+        if (cost > rivalBrawn) {
+            return false;
         } else {
             return true;
         }
     }
 }
 
-function playCard(id) {
-console.log(id);
 
-}
 
 function removeCard(e) {
     let element = e.currentTarget;
@@ -388,50 +540,11 @@ function removeCard(e) {
 }
 
 
-/*
-
-        let newCard = document.createElement("div");
-        newCard.classList.add("card");
-
-        //title div
-        let cardTitleDiv = document.createElement("div");
-        cardTitleDiv.classList.add("card-title");
-        let cardNamePara = document.createElement("p");
-        cardNamePara.innerText = `${cardPulled.cardTitle}`;
-
-        let cardCostPara = document.createElement("p");
-        cardCostPara.innerText = `${cardPulled.cardCost}`;
-        cardCostPara.classList.add("cost");
-        cardTitleDiv.appendChild(cardNamePara);
-        cardTitleDiv.appendChild(cardCostPara);
-
-        let cardImgDiv = document.createElement("div");
-        cardImgDiv.classList.add("card-img");
-
-        let cardTextDiv = document.createElement("div");
-        cardTextDiv.classList.add("card-text");
-        cardTextDiv.innerText = `${cardPulled.cardText}`;
-
-
-        newCard.appendChild(cardTitleDiv);
-        newCard.appendChild(cardImgDiv);
-        newCard.appendChild(cardTextDiv);
-
-        newCard.addEventListener('click', () => {playCard(cardPulled.cardTitle)});
-        newCard.addEventListener('click', (e) => {
-            if (checkCost(cardPulled.cardCost)) {
-                removeCard(e);
-            }
-        });
-        const gameBoard = document.getElementById("gameboard");
-        gameBoard.appendChild(newCard);
-        drawingCards.splice(draw, 1);
-    }
-*/
 
 
 //displays each card in hand
 function displayHand() {
+
     for (i = 0; i < userHand.length; i++) {
         displayCard(userHand[i]);
     }
@@ -450,9 +563,9 @@ function fillDecks() {
     }
 }
 
-//hand is drawn depending on whose turn it is 
-function drawCards() {
-    for (i = 0; i < startingHandSize; i++) {
+//cards are drawn depending on whose turn it is 
+function drawCards(num) {
+    for (i = 0; i < num; i++) {
         if (userTurn) {
             let draw = Math.floor(Math.random() * userRemainingDeck.length);
             userHand.push(userRemainingDeck[draw]);
@@ -490,20 +603,11 @@ function gameOver() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-function calculateBones(num, player) {
+//calculates bonuses based on fear and cheer
+function calculateBones(num) {
     let bones = num;
 
-    if (player) {
+    if (userTurn) {
         bones += userCheer;
         bones -= userFear;
         if (bones < 0) {
@@ -520,51 +624,15 @@ function calculateBones(num, player) {
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
 /*
-
-
-
-
-
-
-
-
-
-
-function calculateBones(num, player){
-    let bones = num;
-
-    if (player) {
-        bones += userCheer;
-        bones -= userFear;
-        if (bones < 0){
-            bones = 0;
-        }
-        return bones;
-    } else {
-        bones += userCheer;
-        bones -= userFear;
-        if (bones < 0){
-            bones = 0;
-        }
-        return bones;
-    }
-}
-
-
-
-
-
-
-//move this to be with player score keeper
-//rename to be themed?
-window.addEventListener('DOMContentLoaded', (event) => {
-    updatePlayerScore(0);
-});
-
-
-
 
 
 const deck = ["Lil Lindy", "Lil Lindy", "Lil Lindy", "Gavotte Trot", "Gavotte Trot", "Flip Floss", "Takey Tap Tap", "One Step Pep", "Rhythm & Grow", "Rig-A-Jig"];
@@ -895,119 +963,21 @@ function displayCards() {
 //     rivalTurn();
 // }
 
+*/
+
+
 const orangeDiv = document.getElementById("something");
-orangeDiv.addEventListener('click', testNewCards);
-const greenDiv = document.getElementById("options");
-greenDiv.addEventListener('click', rivalTurn);
-const greyDiv = document.getElementById("placeholder");
+orangeDiv.addEventListener('click', passTurn);
+//const greenDiv = document.getElementById("options");
+//greenDiv.addEventListener('click', rivalTurn);
+//const greyDiv = document.getElementById("placeholder");
 //greyDiv.addEventListener('click', )
 
-//["Lil Lindy", "Lil Lindy", "Lil Lindy", "Gavotte Trot", "Gavotte Trot", "Flip Floss", "Takey Tap Tap", "One Step Pep", "Rhythm & Grow", "Rig-A-Jig"];
 
-function testNewCards(){
-    const previousCards = document.querySelectorAll(".card");
-    previousCards.forEach(element => element.remove());
-
-let tempArr = [
-    {
-        cardTitle: "Lil Lindy",
-        cardCost: 1,
-        cardText: `Gain ${2+userHype-userFear} points`,
-        cardFunc: lindy,
-        cardImg: ""
-    },
-    {
-        cardTitle: "Lil Lindy",
-        cardCost: 1,
-        cardText: `Gain ${2+userHype-userFear} points`,
-        cardFunc: lindy,
-        cardImg: ""
-    },
-    {
-        cardTitle: "Lil Lindy",
-        cardCost: 1,
-        cardText: `Gain ${2+userHype-userFear} points`,
-        cardFunc: lindy,
-        cardImg: ""
-    },
-    {
-        cardTitle: "Gavotte Trot",
-        cardCost: 2,
-        cardText: `Gain ${4+userHype-userFear} points`,
-        cardFunc: gavotte,
-        cardImg: ""
-    },
-    {
-        cardTitle: "Gavotte Trot",
-        cardCost: 2,
-        cardText: `Gain ${4+userHype-userFear} points`,
-        cardFunc: gavotte,
-        cardImg: ""
-    },
-    {
-        cardTitle: "One Step Pep",
-        cardCost: 2,
-        cardText: `Gain 1 Hype`,
-        cardFunc: pep,
-        cardImg: ""
-    },
-
-
-];
-userBeats = 4;
-drawingCards = Array.from(tempArr);
-    for (i = 0; i < 3; i++) {
-        let draw = Math.floor(Math.random() * drawingCards.length);
-        hand[i] = drawingCards[draw];
-        let cardPulled = hand[i];
-
-        let newCard = document.createElement("div");
-        newCard.classList.add("card");
-
-        //title div
-        let cardTitleDiv = document.createElement("div");
-        cardTitleDiv.classList.add("card-title");
-        let cardNamePara = document.createElement("p");
-        cardNamePara.innerText = `${cardPulled.cardTitle}`;
-
-        let cardCostPara = document.createElement("p");
-        cardCostPara.innerText = `${cardPulled.cardCost}`;
-        cardCostPara.classList.add("cost");
-        cardTitleDiv.appendChild(cardNamePara);
-        cardTitleDiv.appendChild(cardCostPara);
-
-        let cardImgDiv = document.createElement("div");
-        cardImgDiv.classList.add("card-img");
-
-        let cardTextDiv = document.createElement("div");
-        cardTextDiv.classList.add("card-text");
-        cardTextDiv.innerText = `${cardPulled.cardText}`;
-
-
-        newCard.appendChild(cardTitleDiv);
-        newCard.appendChild(cardImgDiv);
-        newCard.appendChild(cardTextDiv);
-
-        newCard.addEventListener('click', () => {playCard(cardPulled.cardTitle)});
-        newCard.addEventListener('click', (e) => {
-            if (checkCost(cardPulled.cardCost)) {
-                removeCard(e);
-            }
-        });
-        const gameBoard = document.getElementById("gameboard");
-        gameBoard.appendChild(newCard);
-        drawingCards.splice(draw, 1);
-    }
-
-}
-
-
-function updatePlayerScore(points){
+function updateUserScore(points){
     const playerScore = document.getElementById('player-score');
     const playerScoreBar = document.getElementById('playerScore');
-    userPoints = userPoints + points;
-    playerScore.innerText = `${userPoints}`;
-    playerScoreBar.setAttribute('value', `${userPoints}`);
+    userBones = userBones + points;
+    playerScore.innerText = `${userBones}`;
+    playerScoreBar.setAttribute('value', `${userBones}`);
 }
-
-*/
