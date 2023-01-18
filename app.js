@@ -17,6 +17,14 @@ let rivalBrawn = startingBrawn;
 let rivalCheer = 0;
 let rivalFear = 0;
 
+//DECK setup
+const basicDeck = 10;
+const morriganDeck = [10, 11, 12];
+const croghanDeck = [13, 14, 15];
+const chulainnDeck = [16, 17, 18];
+const jackDeck = [19, 20, 21];
+
+
 //initialize scorekeeping
 window.addEventListener('DOMContentLoaded', (event) => {
     updateAllStats();
@@ -25,74 +33,112 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 /*
 CARD IDs:
-1 - Dredge
-2 - Excavate
-3 - Exhume
-4 - Yoink
-5 - Sláinte!
-6 - Banshee Wail
-7 - Will-o'-the-Wisp
-8 - Bone Jump
-9 - Hearty Haul
-10 - Gold Teeth
-11-100 - <reserved>
-...
-
-101 - <the Morrigan card 1> gives 2 fear
-102 - <the Morrigan card 2> - raven? 
-103 - <the Morrigan card 3> - shapeshift - steal and play a card of your opponent's special deck
-104 - <Old Croghan card 1> fisticuffs
-105 - <Old Croghan card 2> leather band
-106 - <Old Croghan card 3> 
-107 - <Cú Chulainn card 1> gain 2 cheer battlecry
-108 - <Cú Chulainn card 2> 
-109 - <Cú Chulainn card 3> Gae Bolg - reduce rival bones by half rounded up
-110 - <Stingy Jack card 1> trick or treat - give fear steal cheer
-111 - <Stingy Jack card 2> 
-112 - <Stingy Jack card 3>
+0 - Dredge
+1 - Excavate
+2 - Exhume
+3 - Yoink
+4 - Sláinte!
+5 - Banshee Wail
+6 - Will-o'-the-Wisp
+7 - Bone Jump
+8 - Hearty Haul
+9 - Gold Teeth
+10 - <the Morrigan card 1> gives 2 fear
+11 - Raven's Foresight - draw 2
+12 - Shapeshift - steal and play a card of your opponent's special deck
+13 - <Old Croghan card 1> fisticuffs
+14 - <Old Croghan card 2> leather band
+15 - <Old Croghan card 3> 
+16 - <Cú Chulainn card 1> gain 2 cheer battlecry
+17 - <Cú Chulainn card 2> 
+18 - <Cú Chulainn card 3> Gae Bolg - reduce rival bones by half rounded up
+19 - Trick or Treat
+20 - <Stingy Jack card 2> 
+21 - Devil's Coin - Random player steals 5 bones
 
 STRETCH GOAL: THE POOKA
 
 */
 
-
-function playCard(id) {
+//will either return the text of a card, or enact the card's ability. 'text' is a boolean for which to return
+function playCard(id, text) {
     switch (id) {
+        case 0:
+            if (text) {
+                return `Find ${calculateBones(2)} bones.`;
+                break;
+            } else {
+                gain(calculateBones(2));
+                break;
+            }
         case 1:
-            gain(calculateBones(2));
-            break;
-        case 2:
+            if (text) {
+                return `Find ${calculateBones(4)} bones.`;
+                break;
+            }else {
             gain(calculateBones(4));
-            break;
-        case 3:
+            break;}
+        case 2:
+            if (text) {
+                return `Find ${calculateBones(7)} bones.`;
+                break;
+            }else {
             gain(calculateBones(7));
-            break;
-        case 4:
+            break;}
+        case 3:
+            if (text) {
+                return `Steal ${calculateBones(3)} bones.`;
+                break;
+            }else {
             steal(3);
-            break;
-        case 5:
+            break;}
+        case 4:
+            if (text) {
+                return "Gain 1 cheer.";
+                break;
+            }else {
             cheer(1);
-            break;
-        case 6:
+            break;}
+        case 5:
+            if (text) {
+                return "Your opponent gains 1 fear.";
+                break;
+            }else {
             fear(1);
-            break;
-        case 7:
+            break;}
+        case 6:
+            if (text) {
+                return "Gain 1 brawn.";
+                break;
+            }else {
             brawn(1);
-            break;
-        case 8:
+            break;}
+        case 7:
+            if (text) {
+                return "Draw 1 card";
+                break;
+            }else {
             drawCards(1);
             if (userTurn) {
                 displayCard(userHand[userHand.length - 1]);
             }
-            break;
-        case 9:
+            break;}
+        case 8:
+            if (text) {
+                return `Find ${calculateBones(2)} bones. \nRemove 1 fear.`;
+                break;
+            }else {
             gain(calculateBones(2));
             calm(1);
-            break;
-        case 10:
+            break;}
+        case 9:
+            if (text) {
+                return `Find ${calculateBones(3)} bones. \nGain 1 cheer.`;
+                break;
+            }else {
             gain(calculateBones(3));
             cheer(1);
-            break;
+            break;}
     }
 }
 
@@ -189,10 +235,12 @@ function reduce(num) {
 }
 
 
-//BASIC DECK:
-const basicDeck = [
+
+
+//COMPLETE CARD LIST:
+const completeCardList = [
     {
-        cardId: 1,
+        cardId: 0,
         cardName: "Dredge",
         cardCost: 1,
         cardImg: "",
@@ -201,7 +249,7 @@ const basicDeck = [
         cardCopies: 3
     },
     {
-        cardId: 2,
+        cardId: 1,
         cardName: "Excavate",
         cardCost: 2,
         cardImg: "",
@@ -210,7 +258,7 @@ const basicDeck = [
         cardCopies: 2
     },
     {
-        cardId: 3,
+        cardId: 2,
         cardName: "Exhume",
         cardCost: 3,
         cardImg: "",
@@ -219,7 +267,7 @@ const basicDeck = [
         cardCopies: 1
     },
     {
-        cardId: 4,
+        cardId: 3,
         cardName: "Yoink",
         cardCost: 3,
         cardImg: "",
@@ -228,7 +276,7 @@ const basicDeck = [
         cardCopies: 1
     },
     {
-        cardId: 5,
+        cardId: 4,
         cardName: "Sláinte!",
         cardCost: 2,
         cardImg: "",
@@ -237,7 +285,7 @@ const basicDeck = [
         cardCopies: 1
     },
     {
-        cardId: 6,
+        cardId: 5,
         cardName: "Banshee Wail",
         cardCost: 2,
         cardImg: "",
@@ -246,7 +294,7 @@ const basicDeck = [
         cardCopies: 1
     },
     {
-        cardId: 7,
+        cardId: 6,
         cardName: "Will-o'-the-Wisp",
         cardCost: 0,
         cardImg: "",
@@ -255,7 +303,7 @@ const basicDeck = [
         cardCopies: 1
     },
     {
-        cardId: 8,
+        cardId: 7,
         cardName: "Bone Jump",
         cardCost: 1,
         cardImg: "",
@@ -264,7 +312,7 @@ const basicDeck = [
         cardCopies: 1
     },
     {
-        cardId: 9,
+        cardId: 8,
         cardName: "Hearty Haul",
         cardCost: 2,
         cardImg: "",
@@ -273,7 +321,7 @@ const basicDeck = [
         cardCopies: 1
     },
     {
-        cardId: 10,
+        cardId: 9,
         cardName: "Gold Teeth",
         cardCost: 3,
         cardImg: "",
@@ -281,138 +329,141 @@ const basicDeck = [
         cardType: "basic",
         cardCopies: 1
     }
+
+    //SPECIAL DECKS:
+    //To be implemented once finished being designed
+
+    /*
+    
+    //the Morrigan:
+    const morriganDeck = [
+        {
+            cardId: 10,
+            cardName: "?"
+            cardCost: 
+            cardImg: "",
+            cardText: "Your opponent gains 2 fear."
+            cardType: "morrigan",
+            cardCopies: 2,
+        },
+        {
+            cardId: 11,
+            cardName: "Raven's Foresight"
+            cardCost: 
+            cardImg: "",
+            cardText: "Draw 2 cards."
+            cardType: "morrigan",
+            cardCopies: 1,
+        },
+        {
+            cardId: 12,
+            cardName: "Shapeshift"
+            cardCost: 
+            cardImg: "",
+            cardText: "Play a random Aspect card from your opponent's deck"
+            cardType: "morrigan",
+            cardCopies: 1
+        }
+    ];
+    
+    //Old Croghan:
+    const croghanDeck = [
+        {
+            cardId: 13,
+            cardName: 
+            cardCost: 
+            cardImg: "",
+            cardText: 
+            cardType: "croghan",
+            cardCopies: 2,
+        },
+        {
+            cardId: 14,
+            cardName: 
+            cardCost: 
+            cardImg: "",
+            cardText: 
+            cardType: "croghan",
+            cardCopies: 1,
+        },
+        {
+            cardId: 15,
+            cardName: 
+            cardCost: 
+            cardImg: "",
+            cardText: 
+            cardType: "croghan",
+            cardCopies: 1
+        }
+    ];
+    
+    //Cú Chulainn
+    const chulainnDeck = [
+        {
+            cardId: 16,
+            cardName: 
+            cardCost: 
+            cardImg: "",
+            cardText: 
+            cardType: "chulainn",
+            cardCopies: 2,
+        },
+        {
+            cardId: 17,
+            cardName: 
+            cardCost: 
+            cardImg: "",
+            cardText: 
+            cardType: "chulainn",
+            cardCopies: 1,
+        },
+        {
+            cardId: 18,
+            cardName: 
+            cardCost: 
+            cardImg: "",
+            cardText: 
+            cardType: "chulainn",
+            cardCopies: 1
+        }
+    ];
+    
+    //Stingy Jack:
+    const jackDeck = [
+        {
+            cardId: 19,
+            cardName: "Trick or Treat"
+            cardCost: 
+            cardImg: "",
+            cardText: "Steal 1 cheer.\n Your opponent gains 1 fear."
+            cardType: "jack",
+            cardCopies: 2
+        },
+        {
+            cardId: 20,
+            cardName: 
+            cardCost: 
+            cardImg: "",
+            cardText: 
+            cardType: "jack",
+            cardCopies: 1
+        },
+        {
+            cardId: 21,
+            cardName: "Devil's Coin"
+            cardCost: 
+            cardImg: "",
+            cardText: ""
+            cardType: "jack",
+            cardCopies: 1
+        }
+    ];
+    
+    */
+
 ];
 
-//SPECIAL DECKS:
-//To be implemented once finished being designed
 
-/*
-
-//the Morrigan:
-const morriganDeck = [
-    {
-        cardId: 101,
-        cardName: 
-        cardCost: 
-        cardImg: "",
-        cardText: 
-        cardType: "morrigan",
-        cardCopies: 2,
-    },
-    {
-        cardId: 102,
-        cardName: 
-        cardCost: 
-        cardImg: "",
-        cardText: 
-        cardType: "morrigan",
-        cardCopies: 1,
-    },
-    {
-        cardId: 103,
-        cardName: 
-        cardCost: 
-        cardImg: "",
-        cardText: 
-        cardType: "morrigan",
-        cardCopies: 1
-    }
-];
-
-//Old Croghan:
-const croghanDeck = [
-    {
-        cardId: 104,
-        cardName: 
-        cardCost: 
-        cardImg: "",
-        cardText: 
-        cardType: "croghan",
-        cardCopies: 2,
-    },
-    {
-        cardId: 105,
-        cardName: 
-        cardCost: 
-        cardImg: "",
-        cardText: 
-        cardType: "croghan",
-        cardCopies: 1,
-    },
-    {
-        cardId: 106,
-        cardName: 
-        cardCost: 
-        cardImg: "",
-        cardText: 
-        cardType: "croghan",
-        cardCopies: 1
-    }
-];
-
-//Cú Chulainn
-const chulainnDeck = [
-    {
-        cardId: 107,
-        cardName: 
-        cardCost: 
-        cardImg: "",
-        cardText: 
-        cardType: "chulainn",
-        cardCopies: 2,
-    },
-    {
-        cardId: 108,
-        cardName: 
-        cardCost: 
-        cardImg: "",
-        cardText: 
-        cardType: "chulainn",
-        cardCopies: 1,
-    },
-    {
-        cardId: 109,
-        cardName: 
-        cardCost: 
-        cardImg: "",
-        cardText: 
-        cardType: "chulainn",
-        cardCopies: 1
-    }
-];
-
-//Stingy Jack:
-const jackDeck = [
-    {
-        cardId: 110,
-        cardName: 
-        cardCost: 
-        cardImg: "",
-        cardText: 
-        cardType: "jack",
-        cardCopies: 2
-    },
-    {
-        cardId: 111,
-        cardName: 
-        cardCost: 
-        cardImg: "",
-        cardText: 
-        cardType: "jack",
-        cardCopies: 1
-    },
-    {
-        cardId: 112,
-        cardName: 
-        cardCost: 
-        cardImg: "",
-        cardText: 
-        cardType: "jack",
-        cardCopies: 1
-    }
-];
-
-*/
 
 //Game Setup
 
@@ -428,31 +479,31 @@ let rivalHand = [];
 
 //GAME LOOP:
 //while (gameOver) {
-  // while (userTurn) {
-        //User Turn
-        //Brawn refilled
-        refillBrawn();
-        //Draw cards
-        drawCards(startingHandSize);
-        //display hand
-        displayHand();
-        //while(!turnOver){
-            //do nothing, play cards, then hit pass turn
-        //}
-        //play cards
-        //endTurn -> remove all card elements, flush hand, refill remaining deck
-   //}
-    //pass turn -> userTurn = false
-    //rival brawn refilled
-    //rival draws cards
-    //rival plays cards
-    //pass turn -> userTurn = true
-    //userTurn = true;
-    //turnOver = false;
+// while (userTurn) {
+//User Turn
+//Brawn refilled
+refillBrawn();
+//Draw cards
+drawCards(startingHandSize);
+//display hand
+displayHand();
+//while(!turnOver){
+//do nothing, play cards, then hit pass turn
+//}
+//play cards
+//endTurn -> remove all card elements, flush hand, refill remaining deck
+//}
+//pass turn -> userTurn = false
+//rival brawn refilled
+//rival draws cards
+//rival plays cards
+//pass turn -> userTurn = true
+//userTurn = true;
+//turnOver = false;
 //}
 
 
-function passTurn(){
+function passTurn() {
     userTurn = false;
     turnOver = true;
     let allCards = document.querySelectorAll(".card");
@@ -461,18 +512,18 @@ function passTurn(){
     userRemainingDeck = Array.from(userDeck);
 }
 
-function refreshCardText(){
+function refreshCardText() {
     let allCards = document.querySelectorAll(".card");
     allCards.forEach(element => element.remove());
     displayHand();
 }
 
 //logic to display a card on the gameboard
-function displayCard(card) {
+function displayCard(id) {
     //new card
     let newCard = document.createElement("div");
     newCard.classList.add("card");
-    newCard.classList.add(`${card.cardType}`);
+    newCard.classList.add(`${completeCardList[id].cardType}`);
     //card heading
     let cardHeading = document.createElement("div");
     cardHeading.classList.add("card-heading");
@@ -480,11 +531,11 @@ function displayCard(card) {
     //card name with name inserted
     let cardName = document.createElement("p");
     cardName.classList.add("card-name");
-    cardName.innerText = `${card.cardName}`;
+    cardName.innerText = `${completeCardList[id].cardName}`;
     //card cost with cost inserted
     let cardCost = document.createElement("p");
     cardCost.classList.add("card-cost");
-    cardCost.innerText = `${card.cardCost}`;
+    cardCost.innerText = `${completeCardList[id].cardCost}`;
     //append paragraphs to card heading
     cardHeading.appendChild(cardName);
     cardHeading.appendChild(cardCost);
@@ -499,8 +550,8 @@ function displayCard(card) {
     cardBody.classList.add("card-body");
     //add card text paragraph to body
     let cardText = document.createElement("p");
-    cardText.classList.add("card-text");
-    cardText.innerText = `${card.cardText}`;
+    cardText.classList.add(`"card-text"`);
+    cardText.innerText = `${playCard(completeCardList[id].cardId, true)}`;
     //append card text to card body
     cardBody.appendChild(cardText);
 
@@ -511,13 +562,14 @@ function displayCard(card) {
 
     //add event listeners for clicking - one for card ability, one for card removal
     newCard.addEventListener('click', (e) => {
-        if (checkCost(card.cardCost)) {
-            playCard(card.cardId);
-            payCost(card.cardCost);
+        if (checkCost(completeCardList[id].cardCost)) {
+            playCard(completeCardList[id].cardId, false);
+            payCost(completeCardList[id].cardCost);
             updateAllStats();
             removeCard(e);
+
             if (userTurn) {
-                let cardIndex = userHand.indexOf(card);
+                let cardIndex = userHand.indexOf(completeCardList[id].cardId);
                 userHand.splice(cardIndex, 1);
                 refreshCardText();
             }
@@ -526,7 +578,7 @@ function displayCard(card) {
 
     //append new card to gameboard
     let gameBoard = document.getElementById("gameboard");
-    gameBoard.appendChild(newCard);
+    gameBoard.appendChild(newCard).focus();
 }
 
 //check if card is playable
@@ -546,10 +598,13 @@ function checkCost(cost) {
     }
 }
 
-function payCost(cost){
-    if (userTurn){
+function refreshDom() {
+    location.reload();
+}
+
+function payCost(cost) {
+    if (userTurn) {
         userBrawn -= cost;
-        console.log(`${userBrawn} brawn left`);
     } else {
         rivalBrawn -= cost;
     }
@@ -573,13 +628,13 @@ function displayHand() {
 
 
 //working:
-//fill both decks from selected cards
+//fill both decks with basic cards
 function fillDecks() {
-    for (i = 0; i < basicDeck.length; i++) {
-        let currentCard = basicDeck[i];
+    for (i = 0; i < basicDeck; i++) {
+        let currentCard = completeCardList[i];
         for (j = 0; j < currentCard.cardCopies; j++) {
-            userDeck.push(currentCard);
-            rivalDeck.push(currentCard);
+            userDeck.push(currentCard.cardId);
+            rivalDeck.push(currentCard.cardId);
         }
     }
 }
@@ -726,7 +781,7 @@ orangeDiv.addEventListener('click', restartTurn);
 //const greyDiv = document.getElementById("placeholder");
 //greyDiv.addEventListener('click', )
 
-function restartTurn(){
+function restartTurn() {
     let allCards = document.querySelectorAll(".card");
     allCards.forEach(element => element.remove());
     userHand = [];
@@ -737,7 +792,7 @@ function restartTurn(){
 
 }
 
-function updateScore(){
+function updateScore() {
     const userScore = document.getElementById('user-score');
     const userScoreBar = document.getElementById('user-score-bar');
     userScore.innerText = `${userBones}`;
@@ -746,28 +801,28 @@ function updateScore(){
     //add logic for rival
 }
 
-function updateBrawn(){
+function updateBrawn() {
     const userBrawnAmount = document.getElementById('user-brawn');
     //const rivalBrawnAmount = document.getElementById('rival-brawn');
     userBrawnAmount.innerText = `${userBrawn}`;
     //rivalBrawnAmount.innerText = `${rivalBrawn}`;
 }
 
-function updateCheer(){
+function updateCheer() {
     const userCheerAmount = document.getElementById('user-cheer');
     //rival
     userCheerAmount.innerText = `${userCheer}`;
     //rival
 }
 
-function updateFear(){
+function updateFear() {
     const userFearAmount = document.getElementById('user-fear');
     //rival
     userFearAmount.innerText = `${userFear}`;
     //rival
 }
 
-function updateAllStats(){
+function updateAllStats() {
     updateScore();
     updateBrawn();
     updateCheer();
