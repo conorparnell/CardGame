@@ -792,8 +792,8 @@ function clearBoard() {
 
 const orangeDiv = document.getElementById("something");
 orangeDiv.addEventListener('click', rivalTurn);
-const greenDiv = document.getElementById("options");
-greenDiv.addEventListener('click', clearBoard);
+//const greenDiv = document.getElementById("options");
+//greenDiv.addEventListener('click', clearBoard);
 //const greyDiv = document.getElementById("placeholder");
 //greyDiv.addEventListener('click', )
 
@@ -814,28 +814,33 @@ function updateScore() {
     userScore.innerText = `${userBones}`;
     userScoreBar.setAttribute('value', `${userBones}`);
 
+    const rivalScore = document.getElementById('rival-score');
+    const rivalScoreBar = document.getElementById('rival-score-bar');
+    rivalScore.innerText = `${rivalBones}`;
+    rivalScoreBar.setAttribute('value', `${rivalBones}`);
+
     //add logic for rival
 }
 
 function updateBrawn() {
     const userBrawnAmount = document.getElementById('user-brawn');
-    //const rivalBrawnAmount = document.getElementById('rival-brawn');
+    const rivalBrawnAmount = document.getElementById('rival-brawn');
     userBrawnAmount.innerText = `${userBrawn}`;
-    //rivalBrawnAmount.innerText = `${rivalBrawn}`;
+    rivalBrawnAmount.innerText = `${rivalBrawn}`;
 }
 
 function updateCheer() {
     const userCheerAmount = document.getElementById('user-cheer');
-    //rival
     userCheerAmount.innerText = `${userCheer}`;
-    //rival
+    const rivalCheerAmount = document.getElementById('rival-cheer');
+    rivalCheerAmount.innerText = `${rivalCheer}`;
 }
 
 function updateFear() {
     const userFearAmount = document.getElementById('user-fear');
-    //rival
     userFearAmount.innerText = `${userFear}`;
-    //rival
+    const rivalFearAmount = document.getElementById('rival-fear');
+    rivalFearAmount.innerText = `${rivalFear}`;
 }
 
 function updateAllStats() {

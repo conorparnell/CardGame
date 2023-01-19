@@ -192,3 +192,12 @@ main {
     margin-right: 80px;
 }
 
+#rival-score-bar{
+    margin-left: 80px;
+}
+
+.rival-score {
+    position: fixed;
+    right: 30px;
+}
+
