@@ -92,7 +92,7 @@ function playCard(id, text) {
                 return `Steal ${calculateBones(3)} bones.`;
                 break;
             } else {
-                steal(3);
+                steal(calculateBones(3));
                 break;
             }
         case 4:
@@ -758,10 +758,10 @@ function rivalTurn() {
             if (checkCost(completeCardList[rivalHand[i]].cardCost)) {
                 console.log("rival has " + rivalBrawn + " brawn");
                 console.log(`Rival plays ${completeCardList[rivalHand[i]].cardName}`);
-                updateAllStats();
-                playCard(rivalHand[i], false);
-                console.log("Rival pays " + completeCardList[rivalHand[i]].cardCost + " brawm");
                 rivalBrawn -= completeCardList[rivalHand[i]].cardCost;
+                playCard(rivalHand[i], false);
+                console.log("Rival pays " + completeCardList[rivalHand[i]].cardCost + " brawn");
+                updateAllStats();
                 console.log("rival has " + rivalBrawn + " brawn");
                 console.log("Rival has " + rivalBones + " bones");
                 displayRivalCard(rivalHand[i], animationTimer);
