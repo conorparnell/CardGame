@@ -43,18 +43,18 @@ CARD IDs:
 7 - Bone Jump
 8 - Hearty Haul
 9 - Gold Teeth
-10 - <the Morrigan card 1> gives 2 fear
-11 - Raven's Foresight - draw 2
-12 - Shapeshift - steal and play a card of your opponent's special deck
-13 - <Old Croghan card 1> fisticuffs
-14 - <Old Croghan card 2> leather band
-15 - <Old Croghan card 3> 
-16 - <Cú Chulainn card 1> gain 2 cheer battlecry
-17 - <Cú Chulainn card 2> 
-18 - <Cú Chulainn card 3> Gae Bolg - reduce rival bones by half rounded up
-19 - Trick or Treat
-20 - <Stingy Jack card 2> 
-21 - Devil's Coin - Random player steals 5 bones
+10 - <the Morrigan> gives 2 fear
+11 - <the Morrigan> Raven's Foresight <the Morrigan>
+12 - <the Morrigan> Shapeshift <the Morrigan> steal and play a card of your opponent's special deck
+13 - <Old Croghan> fisticuffs
+14 - <Old Croghan> leather band
+15 - <Old Croghan> 
+16 - <Cú Chulainn> gain 2 cheer battlecry
+17 - <Cú Chulainn> 
+18 - <Cú Chulainn>Gae Bolg
+19 - <Stingy Jack> Trick or Treat <Stingy Jack>
+20 - <Stingy Jack> 
+21 - <Stingy Jack> Devil's Coin - Random player steals 5 bones
 
 STRETCH GOAL: THE POOKA
 
@@ -75,70 +75,79 @@ function playCard(id, text) {
             if (text) {
                 return `Find ${calculateBones(4)} bones.`;
                 break;
-            }else {
-            gain(calculateBones(4));
-            break;}
+            } else {
+                gain(calculateBones(4));
+                break;
+            }
         case 2:
             if (text) {
                 return `Find ${calculateBones(7)} bones.`;
                 break;
-            }else {
-            gain(calculateBones(7));
-            break;}
+            } else {
+                gain(calculateBones(7));
+                break;
+            }
         case 3:
             if (text) {
                 return `Steal ${calculateBones(3)} bones.`;
                 break;
-            }else {
-            steal(3);
-            break;}
+            } else {
+                steal(3);
+                break;
+            }
         case 4:
             if (text) {
                 return "Gain 1 cheer.";
                 break;
-            }else {
-            cheer(1);
-            break;}
+            } else {
+                cheer(1);
+                break;
+            }
         case 5:
             if (text) {
                 return "Your opponent gains 1 fear.";
                 break;
-            }else {
-            fear(1);
-            break;}
+            } else {
+                fear(1);
+                break;
+            }
         case 6:
             if (text) {
                 return "Gain 1 brawn.";
                 break;
-            }else {
-            brawn(1);
-            break;}
+            } else {
+                brawn(1);
+                break;
+            }
         case 7:
             if (text) {
-                return "Draw 1 card";
+                return "Draw 1 card.";
                 break;
-            }else {
-            drawCards(1);
-            if (userTurn) {
-                displayCard(userHand[userHand.length - 1]);
+            } else {
+                drawCards(1);
+                if (userTurn) {
+                    displayCard(userHand[userHand.length - 1]);
+                }
+                break;
             }
-            break;}
         case 8:
             if (text) {
                 return `Find ${calculateBones(2)} bones. \nRemove 1 fear.`;
                 break;
-            }else {
-            gain(calculateBones(2));
-            calm(1);
-            break;}
+            } else {
+                gain(calculateBones(2));
+                calm(1);
+                break;
+            }
         case 9:
             if (text) {
                 return `Find ${calculateBones(3)} bones. \nGain 1 cheer.`;
                 break;
-            }else {
-            gain(calculateBones(3));
-            cheer(1);
-            break;}
+            } else {
+                gain(calculateBones(3));
+                cheer(1);
+                break;
+            }
     }
 }
 
@@ -162,8 +171,8 @@ function steal(num) {
             gain(bones);
             reduce(bones);
         } else {
-            gain(bones);
-            reduce(bones);
+            gain(num);
+            reduce(num);
         }
     } else {
         if (userBones < num) {
@@ -171,8 +180,8 @@ function steal(num) {
             gain(bones);
             reduce(bones);
         } else {
-            gain(bones);
-            reduce(bones);
+            gain(num);
+            reduce(num);
         }
     }
 }
@@ -307,7 +316,7 @@ const completeCardList = [
         cardName: "Bone Jump",
         cardCost: 1,
         cardImg: "",
-        cardText: "Draw 1 card",
+        cardText: "Draw 1 card.",
         cardType: "basic",
         cardCopies: 1
     },
@@ -419,10 +428,10 @@ const completeCardList = [
         },
         {
             cardId: 18,
-            cardName: 
-            cardCost: 
+            cardName: "Gae Bolg"
+            cardCost: 4
             cardImg: "",
-            cardText: 
+            cardText: "Reduce your opponent's bones by half."
             cardType: "chulainn",
             cardCopies: 1
         }
@@ -494,9 +503,14 @@ displayHand();
 //endTurn -> remove all card elements, flush hand, refill remaining deck
 //}
 //pass turn -> userTurn = false
+
 //rival brawn refilled
-//rival draws cards
+
 //rival plays cards
+
+
+
+
 //pass turn -> userTurn = true
 //userTurn = true;
 //turnOver = false;
@@ -510,6 +524,11 @@ function passTurn() {
     allCards.forEach(element => element.remove());
     userHand = [];
     userRemainingDeck = Array.from(userDeck);
+}
+
+function refillDecks() {
+    userRemainingDeck = Array.from(userDeck);
+    rivalRemainingDeck = Array.from(rivalDeck);
 }
 
 function refreshCardText() {
@@ -598,9 +617,7 @@ function checkCost(cost) {
     }
 }
 
-function refreshDom() {
-    location.reload();
-}
+
 
 function payCost(cost) {
     if (userTurn) {
@@ -650,6 +667,8 @@ function drawCards(num) {
             let draw = Math.floor(Math.random() * rivalRemainingDeck.length);
             rivalHand.push(rivalRemainingDeck[draw]);
             rivalRemainingDeck.splice(draw, 1);
+            console.log("Rival draws card");
+            console.log(rivalHand);
         }
     }
 }
@@ -707,77 +726,74 @@ function calculateBones(num) {
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-/*
 
 
-//Enemy turn:
-function rivalTurn() {
-    rivalBeats = 4;
-    rivalHand = [];
-    rivalCards = Array.from(rivalDeck);
-    for (i = 0; i < 3; i++) {
-        let draw = Math.floor(Math.random() * rivalCards.length);
-        rivalHand[i] = rivalCards[draw];
-        rivalCards.splice(draw, 1);
-    }
-    console.log("Your opponent draws their cards.");
-    rivalPlay();
-}
 
 
 
 //Enemy turn
-
-function rivalPlay() {
-    for (i = 0; i < rivalHand.length; i++) {
-        let cost = 0;
-
-        switch (rivalHand[i]) {
-            case "Twizzle Sizzle":
-                cost = 1;
-                break;
-            case "Dainty Dip":
-                cost = 2;
-                break;
-            case "Glissade Parade":
-                cost = 3;
-                break;
-            case "Mooching Mamba":
-                cost = 4;
-            case "Cheer Squad":
-                cost = 2;
-        }
-
-        if (cost < rivalBeats) {
-            console.log(`Rival plays ${rivalHand[i]}`);
-            switch (rivalHand[i]) {
-                case "Twizzle Sizzle":
-                    twizzle();
-                    break;
-                case "Dainty Dip":
-                    dainty();
-                    break;
-                case "Glissade Parade":
-                    glissade();
-                    break;
-                case "Mooching Mamba":
-                    mooching();
-                case "Cheer Squad":
-                    cheer();
+function rivalTurn() {
+    userTurn = false;
+    console.log("userturn is off");
+    refillDecks();
+    console.log("Decks are refilled");
+    clearBoard();
+    console.log("board is cleared");
+    refillBrawn();
+    console.log("brawn is refilled");
+    drawCards(startingHandSize);
+    console.log("cards are drawn");
+    console.log(rivalHand);
+    let animationTimer = 0;
+    for (j = 0; j < 2; j++) { //go through twice just in case of gaining brawn.
+        for (i = 0; i < rivalHand.length; i++) {
+            console.log(rivalHand[i] + " is next up");
+            if (checkCost(completeCardList[rivalHand[i]].cardCost)) {
+                console.log("rival has " + rivalBrawn + " brawn");
+                console.log(`Rival plays ${completeCardList[rivalHand[i]].cardName}`);
+                updateAllStats();
+                playCard(rivalHand[i], false);
+                console.log("Rival pays " + completeCardList[rivalHand[i]].cardCost + " brawm");
+                rivalBrawn -= completeCardList[rivalHand[i]].cardCost;
+                console.log("rival has " + rivalBrawn + " brawn");
+                console.log("Rival has " + rivalBones + " bones");
+                displayRivalCard(rivalHand[i], animationTimer);
+                animationTimer += 3000;
+                console.log(animationTimer);
+                rivalHand.splice(i, 1);
+                console.log(rivalHand);
+                i--; //decrement to match the index lost
+            } else {
+                console.log(`Rival can't play ${completeCardList[rivalHand[i]].cardName}`);
+                console.log(rivalHand);
             }
         }
-
     }
+    rivalHand = [];
+    console.log("rival hand is flushed");
+    userTurn = true;
+    console.log("userturn is on");
+    updateAllStats();
+    setTimeout(restartTurn, animationTimer);
 }
-*/
+
+function clearBoard() {
+    let allCards = document.querySelectorAll(".card");
+    allCards.forEach(element => element.remove());
+}
+
 
 const orangeDiv = document.getElementById("something");
-orangeDiv.addEventListener('click', restartTurn);
-//const greenDiv = document.getElementById("options");
-//greenDiv.addEventListener('click', rivalTurn);
+orangeDiv.addEventListener('click', rivalTurn);
+const greenDiv = document.getElementById("options");
+greenDiv.addEventListener('click', clearBoard);
 //const greyDiv = document.getElementById("placeholder");
 //greyDiv.addEventListener('click', )
 
@@ -827,4 +843,67 @@ function updateAllStats() {
     updateBrawn();
     updateCheer();
     updateFear();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function displayRivalCard(id, delay) {
+    //new card
+    let newCard = document.createElement("div");
+    newCard.classList.add("rival-card");
+    newCard.classList.add(`${completeCardList[id].cardType}`);
+    //card heading
+    let cardHeading = document.createElement("div");
+    cardHeading.classList.add("card-heading");
+    //two paragraphs within card heading
+    //card name with name inserted
+    let cardName = document.createElement("p");
+    cardName.classList.add("card-name");
+    cardName.innerText = `${completeCardList[id].cardName}`;
+    //card cost with cost inserted
+    let cardCost = document.createElement("p");
+    cardCost.classList.add("card-cost");
+    cardCost.innerText = `${completeCardList[id].cardCost}`;
+    //append paragraphs to card heading
+    cardHeading.appendChild(cardName);
+    cardHeading.appendChild(cardCost);
+
+    //card image
+    let cardImg = document.createElement("div");
+    cardImg.classList.add("card-img");
+    //TODO: make art lol
+
+    //card body
+    let cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
+    //add card text paragraph to body
+    let cardText = document.createElement("p");
+    cardText.classList.add(`"card-text"`);
+    cardText.innerText = `${playCard(completeCardList[id].cardId, true)}`;
+    //append card text to card body
+    cardBody.appendChild(cardText);
+
+    //append header, img, and body to newCard
+    newCard.appendChild(cardHeading);
+    newCard.appendChild(cardImg);
+    newCard.appendChild(cardBody);
+
+
+    //append new card to gametable
+    let gameTable = document.getElementById("gametable");
+    setTimeout( () => {
+        gameTable.appendChild(newCard).focus()
+        setTimeout(removeRivalCard, 3000);
+    }, delay);
+    
+}
+
+function removeRivalCard(){
+    const rivalCard = document.querySelector(".rival-card");
+    rivalCard.remove()
 }
