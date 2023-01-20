@@ -517,14 +517,6 @@ displayHand();
 //}
 
 
-function passTurn() {
-    userTurn = false;
-    turnOver = true;
-    let allCards = document.querySelectorAll(".card");
-    allCards.forEach(element => element.remove());
-    userHand = [];
-    userRemainingDeck = Array.from(userDeck);
-}
 
 function refillDecks() {
     userRemainingDeck = Array.from(userDeck);
@@ -781,7 +773,7 @@ function rivalTurn() {
     userTurn = true;
     console.log("userturn is on");
     updateAllStats();
-    setTimeout(restartTurn, animationTimer);
+    setTimeout(userTurnAnimation, animationTimer);
 }
 
 function clearBoard() {
@@ -789,9 +781,50 @@ function clearBoard() {
     allCards.forEach(element => element.remove());
 }
 
+function passTurn() {
+    clearBoard();
+    rivalTurnAnimation();
+    setTimeout(rivalTurn, 1700);
+}
+
+function userTurnAnimation() {
+    const newScreen = document.createElement("div");
+    newScreen.classList.add("screen");
+    newScreen.innerText = "Your Turn!";
+
+    const gameTable = document.getElementById("gametable");
+    gameTable.appendChild(newScreen);
+    setTimeout(clearScreen, 1700);
+    setTimeout(restartTurn, 1700);
+}
+
+function scrollUpAnimation(text) {
+    clearBoard();
+    const newScreen = document.createElement("div");
+    newScreen.classList.add("screen");
+    newScreen.innerText = text;
+
+    const gameTable = document.getElementById("gametable");
+    gameTable.appendChild(newScreen);
+}
+
+function rivalTurnAnimation() {
+    const newScreen = document.createElement("div");
+    newScreen.classList.add("screen");
+    newScreen.innerText = "Rival's Turn!";
+
+    const gameTable = document.getElementById("gametable");
+    gameTable.appendChild(newScreen);
+    setTimeout(clearScreen, 1700);
+}
+
+function clearScreen() {
+    let screen = document.querySelector(".screen");
+    screen.remove();
+}
 
 const orangeDiv = document.getElementById("something");
-orangeDiv.addEventListener('click', rivalTurn);
+orangeDiv.addEventListener('click', passTurn);
 //const greenDiv = document.getElementById("options");
 //greenDiv.addEventListener('click', clearBoard);
 //const greyDiv = document.getElementById("placeholder");
@@ -848,6 +881,28 @@ function updateAllStats() {
     updateBrawn();
     updateCheer();
     updateFear();
+    checkGameOver();
+}
+
+function checkGameOver() {
+    if (userBones >= 30) {
+        scrollUpAnimation("You win!");
+        clearBoard();
+        setTimeout(clearBoard, 500);
+        setTimeout(clearBoard, 1000);
+        console.log("WINNER");
+    } else if (rivalBones >= 30) {
+        scrollUpAnimation("You lose!!!");
+        clearBoard();
+        setTimeout(clearBoard, 500);
+        setTimeout(clearBoard, 1000);
+        removeRivalCard();
+        setTimeout(removeRivalCard, 500);
+        setTimeout(removeRivalCard, 1000);
+        setTimeout(removeRivalCard, 2000);
+        setTimeout(removeRivalCard, 1500);
+        console.log("LOSER!!!!!!!");
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -901,14 +956,14 @@ function displayRivalCard(id, delay) {
 
     //append new card to gametable
     let gameTable = document.getElementById("gametable");
-    setTimeout( () => {
+    setTimeout(() => {
         gameTable.appendChild(newCard).focus()
         setTimeout(removeRivalCard, 3000);
     }, delay);
-    
+
 }
 
-function removeRivalCard(){
+function removeRivalCard() {
     const rivalCard = document.querySelector(".rival-card");
     rivalCard.remove()
 }
