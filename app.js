@@ -760,7 +760,7 @@ function displayCharacters() {
     chulainnDiv.classList.add("char-select");
     chulainnDiv.innerHTML= "<p>Cú Chulainn</p>";
     chulainnDiv.setAttribute('id', 'chulainn-div');
-    chulainnDiv.addEventListener('click', chulainnDiv);
+    chulainnDiv.addEventListener('click', chulainnSelect);
     chulainnDiv.addEventListener('click', () => {
         rivalDeckSelection(['m', 'o', 'j']);
         clearSelection();
@@ -836,8 +836,13 @@ let rivalRemainingDeck = Array.from(rivalDeck);
 let userHand = []; //cards drawn/displayed
 let rivalHand = [];
 
+function loadDecks(){
+    userRemainingDeck = Array.from(userDeck); //deck to manipulate each turn
+    rivalRemainingDeck = Array.from(rivalDeck);
+}
 
 function startGame() {
+    loadDecks();
     //GAME LOOP:
     //while (gameOver) {
     // while (userTurn) {
