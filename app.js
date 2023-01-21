@@ -20,7 +20,7 @@ let rivalFear = 0;
 //DECK setup
 const basicDeck = 10;
 const morriganDeck = [10, 10, 11, 11, 12];
-const croghanDeck = [13, 13, 13, 13, 14, 14, 15];
+const croghanDeck = [13, 13, 13, 13, 14, 14, 15, 15];
 const chulainnDeck = [17, 17, 18, 18, 19];
 const jackDeck = [22, 22, 22, 23, 23, 24];
 
@@ -58,9 +58,9 @@ the Morrígan:
 
 Old Croghan:
 
-13 - <Old Croghan> Sphagnum Bloom - gain 1 brawn x5 - 0
+13 - <Old Croghan> Sphagnum Bloom - gain 1 brawn draw 1 card x4 - 0
 14 - <Old Croghan> Bog Rot - put 3 Rot cards in your opponents deck x 2
-15 - <Old Croghan> Fisticuffs - Gain 2 bones for each brawn you have (calculated before playing) x 1
+15 - <Old Croghan> Fisticuffs - Gain 2 bones for each brawn you have (calculated before playing) x 2
 16 - <Old Croghan> Rot - Useless card (Costs 10) x 0
 
 Cú Chulainn:
@@ -143,12 +143,12 @@ function playCard(id, text) {
             }
         case 7:
             if (text) {
-                return "Draw 1 card.";
+                return "Draw 2 cards.";
                 break;
             } else {
-                drawCards(1);
+                drawCards(2);
                 if (userTurn) {
-                    displayCard(userHand[userHand.length - 1]);
+                    displayHand();
                 }
                 break;
             }
@@ -183,7 +183,7 @@ function playCard(id, text) {
                 return completeCardList[id].cardText;
                 break;
             } else {
-                drawCards(2);
+                drawCards(3);
                 break;
             }
         case 12:
@@ -201,6 +201,7 @@ function playCard(id, text) {
                 break;
             } else {
                 brawn(1);
+                drawCards(1);
                 break;
             }
         case 14:
@@ -287,7 +288,7 @@ function playCard(id, text) {
             }
         case 24:
             if (text) {
-                return `Flip the Devil's Coin.\n A random player steals ${calculateBones(10)} bones.`;
+                return `Flip the Devil's Coin.\n A random player steals\n ${calculateBones(10)} bones.`;
                 break;
             } else {
                 devilsCoin();
@@ -555,7 +556,7 @@ const completeCardList = [
         cardName: "Bone Jump",
         cardCost: 1,
         cardImg: "",
-        cardText: "Draw 1 card.",
+        cardText: "Draw 2 cards.",
         cardType: "basic",
         cardCopies: 1
     },
@@ -592,7 +593,7 @@ const completeCardList = [
         cardName: "Raven's Foresight",
         cardCost: 2,
         cardImg: "",
-        cardText: "Draw 2 cards.",
+        cardText: "Draw 3 cards.",
         cardType: "morrigan",
         cardCopies: 2,
     },
@@ -611,7 +612,7 @@ const completeCardList = [
         cardName: "Sphagnum Bloom",
         cardCost: 0,
         cardImg: "",
-        cardText: "Gain 1 brawn.",
+        cardText: "Gain 1 brawn.\nDraw 1 card.",
         cardType: "croghan",
         cardCopies: 3,
     },
@@ -704,7 +705,7 @@ const completeCardList = [
         cardName: "Grinning Turnip",
         cardCost: 3,
         cardImg: "",
-        cardText: "Starting brawn\n increased by 1",
+        cardText: "Starting brawn\n increased by 1.\nGain 1 brawn.",
         cardType: "jack",
         cardCopies: 2
     },
@@ -759,7 +760,7 @@ function displayCharacters() {
 
     const chulainnDiv = document.createElement("div");
     chulainnDiv.classList.add("char-select");
-    chulainnDiv.innerHTML= "<p>Cú Chulainn</p>";
+    chulainnDiv.innerHTML = "<p>Cú Chulainn</p>";
     chulainnDiv.setAttribute('id', 'chulainn-div');
     chulainnDiv.addEventListener('click', chulainnSelect);
     chulainnDiv.addEventListener('click', () => {
@@ -837,7 +838,7 @@ let rivalRemainingDeck = Array.from(rivalDeck);
 let userHand = []; //cards drawn/displayed
 let rivalHand = [];
 
-function loadDecks(){
+function loadDecks() {
     userRemainingDeck = Array.from(userDeck); //deck to manipulate each turn
     rivalRemainingDeck = Array.from(rivalDeck);
 }
@@ -1103,16 +1104,17 @@ function rivalTurn() {
     let animationTimer = 0;
     for (j = 0; j < 2; j++) { //go through twice just in case of gaining brawn.
         for (i = 0; i < rivalHand.length; i++) {
-            console.log(rivalHand[i].cardName + " is next up");
+            console.log(completeCardList[rivalHand[i]].cardName + " is next up");
             if (checkCost(completeCardList[rivalHand[i]].cardCost)) {
                 console.log(`Rival plays ${completeCardList[rivalHand[i]].cardName}`);
                 rivalBrawn -= completeCardList[rivalHand[i]].cardCost;
-                playCard(rivalHand[i], false);
                 console.log("Rival pays " + completeCardList[rivalHand[i]].cardCost + " brawn");
+                displayRivalCard(rivalHand[i], animationTimer);
+                playCard(rivalHand[i], false);
+                
                 updateAllStats();
                 console.log("rival has " + rivalBrawn + " brawn");
                 console.log("Rival has " + rivalBones + " bones");
-                displayRivalCard(rivalHand[i], animationTimer);
                 setTimeout(tempCheck, (animationTimer + 1000));
                 animationTimer += 3000;
                 console.log(animationTimer);
@@ -1180,8 +1182,8 @@ function rivalTurnAnimation() {
 }
 
 function clearScreen() {
-    let screen = document.querySelector(".screen");
-    screen.remove();
+    let screen = document.querySelectorAll(".screen");
+    screen.forEach(element => element.remove());
 }
 
 const orangeDiv = document.getElementById("something");
@@ -1217,28 +1219,53 @@ function updateScore() {
     rivalScore.innerText = `${rivalBones}`;
     rivalScoreBar.setAttribute('value', `${rivalBones}`);
 
-    //add logic for rival
 }
 
 function updateBrawn() {
     const userBrawnAmount = document.getElementById('user-brawn');
     const rivalBrawnAmount = document.getElementById('rival-brawn');
-    userBrawnAmount.innerText = `${userBrawn}`;
-    rivalBrawnAmount.innerText = `${rivalBrawn}`;
+    userBrawnAmount.innerText = `${displayBrawn(userBrawn)}`;
+    rivalBrawnAmount.innerText = `${displayBrawn(rivalBrawn)}`;
+
+    function displayBrawn(num) {
+        let flex = "";
+        for (i = 0; i < num; i++) {
+            flex += "💪";
+        }
+        return flex;
+    }
 }
+
+
 
 function updateCheer() {
     const userCheerAmount = document.getElementById('user-cheer');
-    userCheerAmount.innerText = `${userCheer}`;
+    userCheerAmount.innerText = `${displayCheer(userCheer)}`;
     const rivalCheerAmount = document.getElementById('rival-cheer');
-    rivalCheerAmount.innerText = `${rivalCheer}`;
+    rivalCheerAmount.innerText = `${displayCheer(rivalCheer)}`;
+
+    function displayCheer(num) {
+        let luck = "";
+        for (i = 0; i < num; i++) {
+            luck += "☘️";
+        }
+        return luck;
+    }
 }
 
 function updateFear() {
     const userFearAmount = document.getElementById('user-fear');
-    userFearAmount.innerText = `${userFear}`;
+    userFearAmount.innerText = `${displayFear(userFear)}`;
     const rivalFearAmount = document.getElementById('rival-fear');
-    rivalFearAmount.innerText = `${rivalFear}`;
+    rivalFearAmount.innerText = `${displayFear(rivalFear)}`;
+
+    function displayFear(num) {
+        let skull = "";
+        for (i = 0; i < num; i++) {
+            skull += "💀";
+        }
+        return skull;
+    }
 }
 
 function updateAllStats() {

@@ -17,32 +17,44 @@
     <header>
         <h1>PeatBone</h1>
         <div id="topbar">
-            <div id="options"><p>green button</p></div>
-            <div id="something"><p>End your turn</p></div>
-            <div id="placeholder"><p>Restart the game</p></div>
+            <div id="options">
+                <p>green button</p>
+            </div>
+            <div id="something">
+                <p>End your turn</p>
+            </div>
+            <div id="placeholder">
+                <p>Restart the game</p>
+            </div>
         </div>
     </header>
 
     <main id="gametable">
-       
+
         <div class="score">
-            (Bones: <span id="user-score"></span>)<br>
-            (Brawn: <span id="user-brawn"></span>)<br>
-            (Cheer: <span id="user-cheer"></span>)<br>
-            (Fear: <span id="user-fear"></span>)<br>
-            <progress max=30 min=0 value=0 id="user-score-bar"></progress></div>
+            <div id="user-stats" class="statboard">
+                Brawn: <span id="user-brawn"></span><br>
+                Cheer: <span id="user-cheer"></span><br>
+                Fear: <span id="user-fear"></span><br>
+                Bones: <span id="user-score"></span>
+            </div>
+            <progress max=30 min=0 value=0 id="user-score-bar"></progress>
+        </div>
         <!--Rival score: <span id="rival-score"></span>-->
         <div id="gameboard">
-        
-       
+
+
         </div>
         <!--<progress max=30 min=0 value=0 id="rivalScore"></progress>-->
         <div class="rival-score">
-            (Bones: <span id="rival-score"></span>)<br>
-            (Brawn: <span id="rival-brawn"></span>)<br>
-            (Cheer: <span id="rival-cheer"></span>)<br>
-            (Fear: <span id="rival-fear"></span>)<br>
-            <progress max=30 min=0 value=0 id="rival-score-bar"></progress></div>
+            <div id="rival-stats" class="statboard">
+            Brawn: <span id="rival-brawn"></span><br>
+            Cheer: <span id="rival-cheer"></span><br>
+            Fear: <span id="rival-fear"></span><br>
+            Bones: <span id="rival-score"></span>
+        </div>
+            <progress max=30 min=0 value=0 id="rival-score-bar"></progress>
+        </div>
     </main>
 
     <script src="app.js"></script>
