@@ -191,6 +191,7 @@ function playCard(id, text) {
                 return completeCardList[id].cardText;
                 break;
             } else {
+                scrollUpAnimation("DOESN'T WORK YET");
                 console.log("TO BE IMPLEMENTED");
                 break;
             }
