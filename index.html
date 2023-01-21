@@ -7,23 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PeatBone</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <header>
-        <h1>PeatBone</h1>
+        <img src="img/pblogo.png" alt="PeatBone" id="logo">
         <div id="topbar">
-            <div id="options">
+            <div id="options" class="buttons">
                 <p>green button</p>
             </div>
-            <div id="something">
+            <div id="something" class="buttons">
                 <p>End your turn</p>
             </div>
-            <div id="placeholder">
+            <div id="placeholder" class="buttons">
                 <p>Restart the game</p>
             </div>
         </div>
@@ -46,7 +45,7 @@
 
         </div>
         <!--<progress max=30 min=0 value=0 id="rivalScore"></progress>-->
-        <div class="rival-score">
+        <div class="score">
             <div id="rival-stats" class="statboard">
             Brawn: <span id="rival-brawn"></span><br>
             Cheer: <span id="rival-cheer"></span><br>

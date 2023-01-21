@@ -127,7 +127,7 @@ function playCard(id, text) {
             }
         case 5:
             if (text) {
-                return "Your opponent gains 1 fear.";
+                return "Your opponent gains 1\n fear.";
                 break;
             } else {
                 fear(1);
@@ -538,7 +538,7 @@ const completeCardList = [
         cardName: "Banshee Wail",
         cardCost: 2,
         cardImg: "",
-        cardText: "Your opponent gains 1 fear.",
+        cardText: "Your opponent gains 1\n fear.",
         cardType: "basic",
         cardCopies: 1
     },
@@ -584,7 +584,7 @@ const completeCardList = [
         cardName: "Shriek of the Morrígan",
         cardCost: 2,
         cardImg: "",
-        cardText: "Your opponent gains 2 fear.",
+        cardText: "Your opponent gains 2\n fear.",
         cardType: "morrigan",
         cardCopies: 2,
     },
@@ -602,7 +602,7 @@ const completeCardList = [
         cardName: "Shapeshift",
         cardCost: 3,
         cardImg: "",
-        cardText: "Play a random Aspect card from your opponent's deck",
+        cardText: "Play a random Aspect\n card from your \nopponent's deck",
         cardType: "morrigan",
         cardCopies: 1
     },
@@ -621,7 +621,7 @@ const completeCardList = [
         cardName: "Bog Rot",
         cardCost: 2,
         cardImg: "",
-        cardText: "Put 3 useless Rot cards into your opponent's deck.",
+        cardText: "Put 3 useless Rot cards\n into your opponent's \ndeck.",
         cardType: "croghan",
         cardCopies: 2,
     },
@@ -729,7 +729,7 @@ const completeCardList = [
 let userDeck = []; //baseline deck to pull from
 let rivalDeck = [];
 fillDecks(); //fills both decks with basic cards
-
+let rivalSelection = ""; //to hold the rival's selected deck, for Shapeshift to work
 displayCharacters();
 
 function displayCharacters() {
@@ -815,15 +815,19 @@ function rivalDeckSelection(userChoice) {
     switch (rivalChoice) {
         case "m":
             rivalDeck = rivalDeck.concat(morriganDeck);
+            rivalSelection = "m";
             break;
         case "o":
             rivalDeck = rivalDeck.concat(croghanDeck);
+            rivalSelection = "o";
             break;
         case "c":
             rivalDeck = rivalDeck.concat(chulainnDeck);
+            rivalSelection = "c";
             break;
         case "j":
             rivalDeck = rivalDeck.concat(jackDeck);
+            rivalSelection = "j";
             break;
     }
 }
@@ -1129,7 +1133,7 @@ function rivalTurn() {
     }
     rivalHand = [];
     console.log("rival hand is flushed");
-    userTurn = true;
+
     console.log("userturn is on");
     updateAllStats();
     setTimeout(userTurnAnimation, animationTimer);
@@ -1159,6 +1163,7 @@ function userTurnAnimation() {
     gameTable.appendChild(newScreen);
     setTimeout(clearScreen, 1700);
     setTimeout(restartTurn, 1700);
+    userTurn = true;
 }
 
 function scrollUpAnimation(text) {
