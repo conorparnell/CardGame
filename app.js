@@ -630,7 +630,7 @@ const completeCardList = [
         cardName: "Fisticuffs",
         cardCost: 0,
         cardImg: "",
-        cardText: "Gain 2 bones for each brawn you have.",
+        cardText: "Find 2 bones for each brawn you have.",
         cardType: "croghan",
         cardCopies: 1
     },
@@ -735,6 +735,7 @@ displayCharacters();
 
 function displayCharacters() {
 
+    const userSel = document.getElementById("user-selection");
     const charSelectScreen = document.createElement("div");
     charSelectScreen.classList.add("splash");
 
@@ -747,6 +748,7 @@ function displayCharacters() {
         rivalDeckSelection(['o', 'c', 'j']);
         clearSelection();
         userSelection = "m";
+        userSel.innerText = "the Morrígan";
         setTimeout(startGame, 500);
     });
 
@@ -759,6 +761,7 @@ function displayCharacters() {
         rivalDeckSelection(['m', 'c', 'j']);
         clearSelection();
         userSelection= "o";
+        userSel.innerText = "Old Croghan Man";
         setTimeout(startGame, 500);
     });
 
@@ -771,6 +774,7 @@ function displayCharacters() {
         rivalDeckSelection(['m', 'o', 'j']);
         clearSelection();
         userSelection = "c";
+        userSel.innerText = "Cú Chulainn";
         setTimeout(startGame, 500);
     });
 
@@ -783,6 +787,7 @@ function displayCharacters() {
         rivalDeckSelection(['m', 'o', 'c']);
         clearSelection();
         userSelection = "j";
+        userSel.innerText = "Stingy Jack";
         setTimeout(startGame, 500);
     });
 
@@ -822,22 +827,27 @@ function jackSelect() {
 
 function rivalDeckSelection(userChoice) {
     let rivalChoice = deckRandomizer(userChoice);
+    const rivalSel = document.getElementById("rival-selection");
     switch (rivalChoice) {
         case "m":
             rivalDeck = rivalDeck.concat(morriganDeck);
+            rivalSel.innerText = "the Morrígan";
             rivalSelection = "m";
             break;
         case "o":
             rivalDeck = rivalDeck.concat(croghanDeck);
             rivalSelection = "o";
+            rivalSel.innerText = "Old Croghan Man";
             break;
         case "c":
             rivalDeck = rivalDeck.concat(chulainnDeck);
             rivalSelection = "c";
+            rivalSel.innerText = "Cú Chulainn";
             break;
         case "j":
             rivalDeck = rivalDeck.concat(jackDeck);
             rivalSelection = "j";
+            rivalSel.innerText = "Stingy Jack";
             break;
     }
 }

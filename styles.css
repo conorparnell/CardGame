@@ -36,7 +36,7 @@ h1 {
 }
 
 #something {
-    background-color: orangered;
+    background-color: rgb(255, 69, 0);
     height: 100px;
     width: 100px;
     border-radius: 50%;
@@ -178,9 +178,17 @@ progress {
     -webkit-appearance: none;
     appearance: none;
     width: 300px;
-    height: 40px;
+    height: 50px;
+    border-style: solid;
+    border-color: black;
+    border-width: 5px;
+    border-radius: 5px;
+    
 
 }
+progress::-moz-progress-bar { background: rgb(118, 85, 24); }
+progress::-webkit-progress-value { background: rgb(118, 85, 24); }
+progress { color: rgb(118, 85, 24); }
 
 main {
     display:grid;
@@ -323,9 +331,7 @@ main {
 
 }
 
-.buttons:hover {
-    box-shadow: 0 0 0 3px black;
-}
+
 
 
 #morrigan-div {
