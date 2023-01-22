@@ -52,9 +52,9 @@ Basic deck:
 
 the Morrígan:
 
-10 - <the Morrigan> Shriek of the Morrigan - gives 2 fear x3
+10 - <the Morrigan> Morrígan's Shriek - gives 2 fear x2
 11 - <the Morrigan> Raven's Foresight - draw 2 x2
-12 - <the Morrigan> Shapeshift - steal and play a card of your opponent's special deck
+12 - <the Morrigan> Shapeshift - steal and play a card of your opponent's aspect
 
 Old Croghan:
 
@@ -191,8 +191,7 @@ function playCard(id, text) {
                 return completeCardList[id].cardText;
                 break;
             } else {
-                scrollUpAnimation("DOESN'T WORK YET");
-                console.log("TO BE IMPLEMENTED");
+                shapeShift();
                 break;
             }
         case 13:
@@ -492,7 +491,7 @@ const completeCardList = [
         cardId: 0,
         cardName: "Dredge",
         cardCost: 1,
-        cardImg: "",
+        cardImg: "img/dredge.jpg",
         cardText: `Find ${calculateBones(2)} bones.`,
         cardType: "basic",
         cardCopies: 3
@@ -501,7 +500,7 @@ const completeCardList = [
         cardId: 1,
         cardName: "Excavate",
         cardCost: 2,
-        cardImg: "",
+        cardImg: "img/excavate.jpg",
         cardText: `Find ${calculateBones(4)} bones.`,
         cardType: "basic",
         cardCopies: 2
@@ -510,7 +509,7 @@ const completeCardList = [
         cardId: 2,
         cardName: "Exhume",
         cardCost: 3,
-        cardImg: "",
+        cardImg: "img/exhume.jpg",
         cardText: `Find ${calculateBones(7)} bones.`,
         cardType: "basic",
         cardCopies: 1
@@ -519,7 +518,7 @@ const completeCardList = [
         cardId: 3,
         cardName: "Yoink",
         cardCost: 3,
-        cardImg: "",
+        cardImg: "img/yoink.jpg",
         cardText: `Steal ${calculateBones(3)} bones.`,
         cardType: "basic",
         cardCopies: 1
@@ -528,7 +527,7 @@ const completeCardList = [
         cardId: 4,
         cardName: "Sláinte!",
         cardCost: 2,
-        cardImg: "",
+        cardImg: "img/slainte.jpg",
         cardText: "Gain 1 cheer.",
         cardType: "basic",
         cardCopies: 1
@@ -537,7 +536,7 @@ const completeCardList = [
         cardId: 5,
         cardName: "Banshee Wail",
         cardCost: 2,
-        cardImg: "",
+        cardImg: "img/wail.jpg",
         cardText: "Your opponent gains 1\n fear.",
         cardType: "basic",
         cardCopies: 1
@@ -546,7 +545,7 @@ const completeCardList = [
         cardId: 6,
         cardName: "Will-o'-the-Wisp",
         cardCost: 0,
-        cardImg: "",
+        cardImg: "img/willo.jpg",
         cardText: "Gain 1 brawn.",
         cardType: "basic",
         cardCopies: 1
@@ -555,7 +554,7 @@ const completeCardList = [
         cardId: 7,
         cardName: "Bone Jump",
         cardCost: 1,
-        cardImg: "",
+        cardImg: "img/bonejump.jpg",
         cardText: "Draw 2 cards.",
         cardType: "basic",
         cardCopies: 1
@@ -564,7 +563,7 @@ const completeCardList = [
         cardId: 8,
         cardName: "Hearty Haul",
         cardCost: 2,
-        cardImg: "",
+        cardImg: "img/hearty.jpg",
         cardText: `Find ${calculateBones(2)} bones. \nRemove 1 fear.`,
         cardType: "basic",
         cardCopies: 1
@@ -573,7 +572,7 @@ const completeCardList = [
         cardId: 9,
         cardName: "Gold Teeth",
         cardCost: 3,
-        cardImg: "",
+        cardImg: "img/gold.jpg",
         cardText: `Find ${calculateBones(3)} bones. \nGain 1 cheer.`,
         cardType: "basic",
         cardCopies: 1
@@ -581,9 +580,9 @@ const completeCardList = [
     //the Morrígan:
     {
         cardId: 10,
-        cardName: "Shriek of the Morrígan",
+        cardName: "Morrígan's Shriek",
         cardCost: 2,
-        cardImg: "",
+        cardImg: "img/shriek.jpg",
         cardText: "Your opponent gains 2\n fear.",
         cardType: "morrigan",
         cardCopies: 2,
@@ -592,7 +591,7 @@ const completeCardList = [
         cardId: 11,
         cardName: "Raven's Foresight",
         cardCost: 2,
-        cardImg: "",
+        cardImg: "img/raven.jpg",
         cardText: "Draw 3 cards.",
         cardType: "morrigan",
         cardCopies: 2,
@@ -601,7 +600,7 @@ const completeCardList = [
         cardId: 12,
         cardName: "Shapeshift",
         cardCost: 3,
-        cardImg: "",
+        cardImg: "img/shapeshift.jpg",
         cardText: "Play a random Aspect\n card from your \nopponent's deck",
         cardType: "morrigan",
         cardCopies: 1
@@ -611,7 +610,7 @@ const completeCardList = [
         cardId: 13,
         cardName: "Sphagnum Bloom",
         cardCost: 0,
-        cardImg: "",
+        cardImg: "img/sphagnum.jpg",
         cardText: "Gain 1 brawn.\nDraw 1 card.",
         cardType: "croghan",
         cardCopies: 3,
@@ -620,7 +619,7 @@ const completeCardList = [
         cardId: 14,
         cardName: "Bog Rot",
         cardCost: 2,
-        cardImg: "",
+        cardImg: "img/bogrot.jpg",
         cardText: "Put 3 useless Rot cards\n into your opponent's \ndeck.",
         cardType: "croghan",
         cardCopies: 2,
@@ -629,7 +628,7 @@ const completeCardList = [
         cardId: 15,
         cardName: "Fisticuffs",
         cardCost: 0,
-        cardImg: "",
+        cardImg: "img/fisty.jpg",
         cardText: "Find 2 bones for each brawn you have.",
         cardType: "croghan",
         cardCopies: 1
@@ -638,7 +637,7 @@ const completeCardList = [
         cardId: 16,
         cardName: "Rot",
         cardCost: 10,
-        cardImg: "",
+        cardImg: "img/rot.jpg",
         cardText: "Gross.",
         cardType: "croghan",
         cardCopies: 0
@@ -649,7 +648,7 @@ const completeCardList = [
         cardId: 17,
         cardName: "Battlecry",
         cardCost: 2,
-        cardImg: "",
+        cardImg: "img/battlecry.jpg",
         cardText: "Gain 2 cheer.",
         cardType: "chulainn",
         cardCopies: 2,
@@ -658,7 +657,7 @@ const completeCardList = [
         cardId: 18,
         cardName: "Cattle Raid",
         cardCost: 3,
-        cardImg: "",
+        cardImg: "img/raid.jpg",
         cardText: "Add one Mythical Bull \nto your hand",
         cardType: "chulainn",
         cardCopies: 2,
@@ -667,7 +666,7 @@ const completeCardList = [
         cardId: 19,
         cardName: "Gae Bolg",
         cardCost: 4,
-        cardImg: "",
+        cardImg: "img/bolg.jpg",
         cardText: "Reduce your opponent's \nbones by half.\nThey lose all cheer.",
         cardType: "chulainn",
         cardCopies: 1
@@ -676,7 +675,7 @@ const completeCardList = [
         cardId: 20,
         cardName: "Finnbhennach",
         cardCost: 0,
-        cardImg: "",
+        cardImg: "img/finn.jpg",
         cardText: "The White Bull\n replenishes your brawn.",
         cardType: "chulainn",
         cardCopies: 0
@@ -685,7 +684,7 @@ const completeCardList = [
         cardId: 21,
         cardName: "Donn Cuailnge",
         cardCost: 0,
-        cardImg: "",
+        cardImg: "img/donn",
         cardText: "The Brown Bull\n doubles your cheer.",
         cardType: "chulainn",
         cardCopies: 0
@@ -695,8 +694,8 @@ const completeCardList = [
         cardId: 22,
         cardName: "Trick or Treat",
         cardCost: 2,
-        cardImg: "",
-        cardText: "Gain 1 cheer.\n Your opponent gains 1 fear.",
+        cardImg: "img/trick.jpg",
+        cardText: "Gain 1 cheer.\n Your opponent gains 1\n fear.",
         cardType: "jack",
         cardCopies: 3
     },
@@ -704,7 +703,7 @@ const completeCardList = [
         cardId: 23,
         cardName: "Grinning Turnip",
         cardCost: 3,
-        cardImg: "",
+        cardImg: "img/turnip.jpg",
         cardText: "Starting brawn\n increased by 1.\nGain 1 brawn.",
         cardType: "jack",
         cardCopies: 2
@@ -713,7 +712,7 @@ const completeCardList = [
         cardId: 24,
         cardName: "Devil's Coin",
         cardCost: 0,
-        cardImg: "",
+        cardImg: "img/coin.jpg",
         cardText: `Flip the Devil's Coin.\n A random player steals ${calculateBones(10)} bones.`,
         cardType: "jack",
         cardCopies: 1
@@ -760,7 +759,7 @@ function displayCharacters() {
     croghanDiv.addEventListener('click', () => {
         rivalDeckSelection(['m', 'c', 'j']);
         clearSelection();
-        userSelection= "o";
+        userSelection = "o";
         userSel.innerText = "Old Croghan Man";
         setTimeout(startGame, 500);
     });
@@ -802,8 +801,8 @@ function displayCharacters() {
 
 function clearSelection() {
     const splash = document.querySelectorAll(".splash");
-    splash.forEach( item => {
-       item.remove();
+    splash.forEach(item => {
+        item.remove();
     });
     const asp = document.getElementById("aspect");
     asp.remove();
@@ -924,14 +923,14 @@ function displayCard(id) {
     //card image
     let cardImg = document.createElement("div");
     cardImg.classList.add("card-img");
-    /*
-        //TEST IN PROGRESS/////////////////////////////////////////////////////////////////
-        let cardImage = document.createElement("img");
-        cardImage.classList.add("card-image");
-        cardImage.src = completeCardList[id].cardImg;
-        cardImg.appendChild(cardImage);
-        //TODO: make art lol
-    */
+
+    //TEST IN PROGRESS/////////////////////////////////////////////////////////////////
+    let cardImage = document.createElement("img");
+    cardImage.classList.add("card-image");
+    cardImage.src = completeCardList[id].cardImg;
+    cardImg.appendChild(cardImage);
+    //TODO: make art lol
+
     //card body
     let cardBody = document.createElement("div");
     cardBody.classList.add("card-body");
@@ -1121,16 +1120,16 @@ function calculateBones(num) {
 //push playable cards into array
 //splice out cards pushed
 //time-lock playing of first card
-    //display card w/ animation timer
-    //pay brawn w/  animation timer + 1000
-    //play card w/ animation timer + 1000
-    //redirect to second card function
+//display card w/ animation timer
+//pay brawn w/  animation timer + 1000
+//play card w/ animation timer + 1000
+//redirect to second card function
 
 
 
 
-    
-    
+
+
 
 
 //Enemy turn
@@ -1156,7 +1155,7 @@ function rivalTurn() {
                 console.log("Rival pays " + completeCardList[rivalHand[i]].cardCost + " brawn");
                 displayRivalCard(rivalHand[i], animationTimer);
                 playCard(rivalHand[i], false);
-                
+
                 updateAllStats();
                 console.log("rival has " + rivalBrawn + " brawn");
                 console.log("Rival has " + rivalBones + " bones");
@@ -1183,6 +1182,16 @@ function rivalTurn() {
 function clearBoard() {
     let allCards = document.querySelectorAll(".card");
     allCards.forEach(element => element.remove());
+}
+
+function fadeBoard() {
+    let allCards = document.querySelectorAll(".card");
+    allCards.forEach(element => element.classList.add('fade'));
+}
+
+function unfadeBoard() {
+    let allCards = document.querySelectorAll(".card");
+    allCards.forEach(element => element.classList.remove('fade'));
 }
 
 function tempCheck() {
@@ -1404,4 +1413,177 @@ function displayRivalCard(id, delay) {
 function removeRivalCard() {
     const rivalCard = document.querySelector(".rival-card");
     rivalCard.remove()
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function shapeShift() {
+    //new card
+    setTimeout(fadeBoard, 20); //working. looks sick
+    console.log("fading cards");
+    let newCard = document.createElement("div");
+    newCard.classList.add("shapeshift");
+    newCard.classList.add("fade"); //starts faded
+    newCard.classList.add(`${completeCardList[12].cardType}`);
+    //card heading
+    let cardHeading = document.createElement("div");
+    cardHeading.classList.add("card-heading");
+    //two paragraphs within card heading
+    //card name with name inserted
+    let cardName = document.createElement("p");
+    cardName.classList.add("card-name");
+    cardName.classList.add("shifted");
+    cardName.setAttribute('id', 'shift-name');
+    cardName.innerText = `${completeCardList[12].cardName}`;
+    //card cost with cost inserted
+    let cardCost = document.createElement("p");
+    cardCost.classList.add("card-cost");
+    cardCost.classList.add("shifted");
+    cardCost.setAttribute('id', 'shift-cost');
+    cardCost.innerText = `${completeCardList[12].cardCost}`;
+    //append paragraphs to card heading
+    cardHeading.appendChild(cardName);
+    cardHeading.appendChild(cardCost);
+
+    //card image
+    let cardImg = document.createElement("div");
+    cardImg.classList.add("card-img");
+    cardImg.classList.add("shifted");
+    cardImg.setAttribute('id', 'shift-img');
+    //TODO: make art lol
+
+    //card body
+    let cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
+    //add card text paragraph to body
+    let cardText = document.createElement("p");
+    cardText.classList.add(`"card-text"`);
+    cardText.classList.add("shifted");
+    cardText.setAttribute('id', 'shift-text');
+    cardText.innerText = `${playCard(completeCardList[12].cardId, true)}`;
+    //append card text to card body
+    cardBody.appendChild(cardText);
+
+    //append header, img, and body to newCard
+    newCard.appendChild(cardHeading);
+    newCard.appendChild(cardImg);
+    newCard.appendChild(cardBody);
+
+
+    //append new card to gametable
+    let gameTable = document.getElementById("gametable");
+    gameTable.appendChild(newCard).focus();
+
+    //set some variables to access
+
+    const name = document.getElementById('shift-name');
+    const cost = document.getElementById('shift-cost');
+    const img = document.getElementById('shift-img');
+    const text = document.getElementById('shift-text');
+
+    //unfade!
+    const unfade = document.querySelector(".shapeshift");
+    setTimeout(() => {
+        unfade.classList.remove("fade");
+    }, 40);
+
+    //SHIFT!!!!!!!!
+    setTimeout(shapeShiftTransform, 1000);
+
+
+    function shapeShiftTransform() {
+        let shape = document.querySelector(".shapeshift");
+        let chosenCard = ""; //to hold card ID
+
+        //card color is changed, text is faded out 
+        setTimeout(changeCardClass, 1000);
+
+        //text is changed, text is faded in
+        setTimeout(replaceText, 1600);
+
+
+
+
+        shape = document.querySelector(".shapeshift");
+        setTimeout(() => {
+            playCard(chosenCard)
+            console.log("playing" + chosenCard);
+        }, 3000)
+        setTimeout(() => {
+            shape.remove();
+            unfadeBoard();
+            updateAllStats();
+
+        }, 3500);
+
+        function changeCardClass() {
+            blankShiftText();
+            switch (rivalSelection) {
+                case "o":
+                    shape.classList.replace("morrigan", "croghan");
+                    break;
+                case "c":
+                    shape.classList.replace("morrigan", "chulainn");
+                    break;
+                case "j":
+                    shape.classList.replace("morrigan", "jack");
+                    break;
+            }
+        }
+
+        function replaceText() {
+            const croghanCards = [13, 14, 15];
+            const chulainnCards = [17, 18, 19];
+            const jackCards = [22, 23, 24];
+            let cardPicker = Math.floor(Math.random() * 3);
+
+            switch (rivalSelection) {
+                case "o":
+                    chosenCard = croghanCards[cardPicker];
+                    morphText();
+                    break;
+                case "c":
+                    chosenCard = chulainnCards[cardPicker];
+                    morphText();
+                    break;
+                case "j":
+                    chosenCard = jackCards[cardPicker];
+                    morphText();
+                    break;
+            }
+
+            function morphText() {
+                console.log(chosenCard);
+                console.log("morphing text");
+                name.innerText = `${completeCardList[chosenCard].cardName}`;
+                console.log(completeCardList[chosenCard].cardName);
+                cost.innerText = `${completeCardList[chosenCard].cardCost}`;
+                img.innerHTML = "";
+                text.innerText = `${playCard(chosenCard, true)}`;
+                unBlankShiftText();
+            }
+        }
+
+        function blankShiftText() {
+            let shifted = document.querySelectorAll(".shifted");
+            shifted.forEach(item => {
+                item.classList.add("fade");
+            })
+            setTimeout(() => {
+                name.innerText = "";
+                cost.innerText = "";
+                img.innerHTML = "";
+                text.innerText = "";
+            }, 500);
+        }
+        function unBlankShiftText() {
+            let shifted = document.querySelectorAll(".shifted");
+            shifted.forEach(item => {
+                console.log("text unfading?");
+                item.classList.remove("fade");
+            })
+        }
+    }
 }

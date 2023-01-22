@@ -69,6 +69,30 @@ h1 {
     
 }
 
+.shapeshift {
+    position: fixed;
+    top: 80px;
+    left: 20%;
+    height: 500px;
+    width: 400px;
+    border-radius: 20px;
+    border-style: solid;
+    border-color:  rgb(0, 0, 0);
+    border-width: 15px;
+    background-color: rgb(80, 0, 80);
+    transition: 0.2s;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 5fr 5fr;
+    grid-template-areas: 
+       "card-title"
+       "card-img"
+        "card-text";
+    justify-content: center;
+    font-size: 2em;
+    animation-duration: 1s;
+  }
+
 .rival-card {
     position: fixed;
     top: 50px;
@@ -112,14 +136,7 @@ h1 {
     }
   }
 
-.card-cost {
-    background-color: black;
-    border-radius: 50%;
-    height: 1.2em;
-    width: 1.2em;
-    color: white;
-    font-family: serif;
-  }
+
 
 .card:hover {
     border-color: goldenrod;
@@ -131,17 +148,19 @@ h1 {
 .card-img {
     display: flex;
     background-color: darkgrey;
-    height: 100%;
+    height: 1fr;
     width: 1fr;
     grid-area: card-img;
     justify-content: center;
   
 }
 
+
+
 .card-image {
-    height: 1fr;
-    width: 1fr;
-    object-fit: contain;
+    height: 100%;
+    width: 70%;
+    object-fit: cover;
     
 }
 
@@ -204,6 +223,7 @@ main {
     font-weight: 300;
     position: fixed;
     text-align: left;
+    
 }
 
 .morrigan {
@@ -211,9 +231,23 @@ main {
     color: gold;
 }
 
+.morrigan .card-img {
+        outline: 100px solid rgba(80, 0, 80, 0.3) !important;
+        outline-offset: -100px;
+        overflow: hidden;
+        position: relative;
+}
+
 .croghan {
     background-color: rgb(95, 29, 12);
     color: gold;
+}
+
+.croghan .card-img {
+    outline: 100px solid rgba(95, 29, 12, 0.3) !important;
+    outline-offset: -100px;
+    overflow: hidden;
+    position: relative;
 }
 
 .chulainn {
@@ -221,9 +255,23 @@ main {
     color: gold;
 }
 
+.chulainn .card-img {
+    outline: 100px solid rgba(3, 80, 0, 0.3) !important;
+    outline-offset: -100px;
+    overflow: hidden;
+    position: relative;
+}
+
 .jack {
     background-color: rgb(180, 78, 10);
     color: gold;
+}
+
+.jack .card-img {
+    outline: 100px solid rgba(180, 78, 10, 0.3) !important;
+    outline-offset: -100px;
+    overflow: hidden;
+    position: relative;
 }
 
 #user-score-bar {
@@ -366,11 +414,11 @@ main {
   }
 
   #user-stats {
-      left: 0%;
+      margin-left: 10px;
   }
 
   #rival-stats {
-      right: 0%;
+      right: -5%;
   }
 
   #logo {
@@ -379,4 +427,22 @@ main {
 
   #aspect {
       font-size: 2em;
+  }
+
+
+  .shifted {
+    opacity: 1; transition: all 0.5s;
+  }
+
+  .fade {
+    opacity: 0;
+  }
+
+  .card-cost {
+    background-color: black;
+    border-radius: 50%;
+    height: 1.2em;
+    width: 1.2em;
+    color: white;
+    font-family: serif;
   }
