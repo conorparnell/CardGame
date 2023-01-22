@@ -1455,8 +1455,13 @@ function shapeShift() {
     let cardImg = document.createElement("div");
     cardImg.classList.add("card-img");
     cardImg.classList.add("shifted");
-    cardImg.setAttribute('id', 'shift-img');
-    //TODO: make art lol
+
+    let cardImage = document.createElement("img");
+    cardImage.classList.add("card-image");
+    cardImage.setAttribute('id', 'shift-img');
+    cardImage.src = `${completeCardList[12].cardImg}`;
+    cardImg.appendChild(cardImage);
+
 
     //card body
     let cardBody = document.createElement("div");
@@ -1564,7 +1569,7 @@ function shapeShift() {
                 name.innerText = `${completeCardList[chosenCard].cardName}`;
                 console.log(completeCardList[chosenCard].cardName);
                 cost.innerText = `${completeCardList[chosenCard].cardCost}`;
-                img.innerHTML = "";
+                img.src = completeCardList[chosenCard].cardImg;
                 text.innerText = `${playCard(chosenCard, true)}`;
                 unBlankShiftText();
             }
