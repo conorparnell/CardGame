@@ -1383,7 +1383,11 @@ function displayRivalCard(id, delay) {
     //card image
     let cardImg = document.createElement("div");
     cardImg.classList.add("card-img");
-    //TODO: make art lol
+    
+    let cardImage = document.createElement("img");
+    cardImage.classList.add("card-image");
+    cardImage.src = completeCardList[id].cardImg;
+    cardImg.appendChild(cardImage);
 
     //card body
     let cardBody = document.createElement("div");

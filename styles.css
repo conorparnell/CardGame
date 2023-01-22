@@ -160,7 +160,7 @@ h1 {
 .card-image {
     height: 100%;
     width: 70%;
-    object-fit: cover;
+    object-fit: contain;
     
 }
 
@@ -226,6 +226,13 @@ main {
     
 }
 
+.rival-card .card-img {
+    outline: 100px solid rgba(80, 0, 80, 0.0) !important;
+    outline-offset: -100px;
+    overflow: hidden;
+    position: relative;
+}
+
 .morrigan {
     background-color: rgb(80, 0, 80);
     color: gold;
@@ -273,6 +280,8 @@ main {
     overflow: hidden;
     position: relative;
 }
+
+
 
 #user-score-bar {
     position: fixed;
