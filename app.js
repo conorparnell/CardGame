@@ -729,7 +729,7 @@ const completeCardList = [
 let userDeck = []; //baseline deck to pull from
 let rivalDeck = [];
 fillDecks(); //fills both decks with basic cards
-let userSelection = "";
+let userSelection = ""; //for displaying during game
 let rivalSelection = ""; //to hold the rival's selected deck, for Shapeshift to work
 displayCharacters();
 
