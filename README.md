@@ -22,7 +22,7 @@ Do what you must to win!
 > Charge into battle with the shout of a hero and the strength of a bull! 
 
 ### Old Croghan Man
-> Bog down your opponent while you build up the strength to wollop them!
+> Bog down your opponent while you build up the strength to wallop them!
 
 ### Stingy Jack
 > Every day is Samhain when you've got the Devil himself in your pocket!
