@@ -214,7 +214,7 @@ function playCard(id, text) {
             }
         case 15:
             if (text) {
-                return `Gain ${calculateBones(2)} bones for each brawn you have.`;
+                return `Find ${calculateBones(2)} bones for each\n brawn you have.`;
                 break;
             } else {
                 fisty();
@@ -694,7 +694,7 @@ const completeCardList = [
     {
         cardId: 22,
         cardName: "Trick or Treat",
-        cardCost: 1,
+        cardCost: 2,
         cardImg: "",
         cardText: "Gain 1 cheer.\n Your opponent gains 1 fear.",
         cardType: "jack",
@@ -729,10 +729,12 @@ const completeCardList = [
 let userDeck = []; //baseline deck to pull from
 let rivalDeck = [];
 fillDecks(); //fills both decks with basic cards
+let userSelection = "";
 let rivalSelection = ""; //to hold the rival's selected deck, for Shapeshift to work
 displayCharacters();
 
 function displayCharacters() {
+
     const charSelectScreen = document.createElement("div");
     charSelectScreen.classList.add("splash");
 
@@ -744,6 +746,7 @@ function displayCharacters() {
     morriganDiv.addEventListener('click', () => {
         rivalDeckSelection(['o', 'c', 'j']);
         clearSelection();
+        userSelection = "m";
         setTimeout(startGame, 500);
     });
 
@@ -755,6 +758,7 @@ function displayCharacters() {
     croghanDiv.addEventListener('click', () => {
         rivalDeckSelection(['m', 'c', 'j']);
         clearSelection();
+        userSelection= "o";
         setTimeout(startGame, 500);
     });
 
@@ -766,6 +770,7 @@ function displayCharacters() {
     chulainnDiv.addEventListener('click', () => {
         rivalDeckSelection(['m', 'o', 'j']);
         clearSelection();
+        userSelection = "c";
         setTimeout(startGame, 500);
     });
 
@@ -777,6 +782,7 @@ function displayCharacters() {
     jackDiv.addEventListener('click', () => {
         rivalDeckSelection(['m', 'o', 'c']);
         clearSelection();
+        userSelection = "j";
         setTimeout(startGame, 500);
     });
 
@@ -790,8 +796,12 @@ function displayCharacters() {
 }
 
 function clearSelection() {
-    const splash = document.querySelector(".splash");
-    splash.remove();
+    const splash = document.querySelectorAll(".splash");
+    splash.forEach( item => {
+       item.remove();
+    });
+    const asp = document.getElementById("aspect");
+    asp.remove();
 }
 
 function morriganSelect() {
@@ -1090,6 +1100,27 @@ function calculateBones(num) {
 
 
 
+//deck is refilled
+//board is cleared
+//brawn is refilled
+//draw hand
+//initalize array of playable cards
+//initialize animation timer
+//initialize brawn counter
+//loop through hand
+//push playable cards into array
+//splice out cards pushed
+//time-lock playing of first card
+    //display card w/ animation timer
+    //pay brawn w/  animation timer + 1000
+    //play card w/ animation timer + 1000
+    //redirect to second card function
+
+
+
+
+    
+    
 
 
 //Enemy turn
