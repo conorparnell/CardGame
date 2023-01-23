@@ -856,7 +856,7 @@ function loadDecks() {
 
 const orangeDiv = document.getElementById("something");
 function startGame() {
-    
+
     orangeDiv.addEventListener('click', passTurn); //turn on end turn button
     loadDecks();
     //GAME LOOP:
@@ -1168,7 +1168,7 @@ function rivalTurn() {
     console.log("userturn is on");
     updateAllStats();
     setTimeout(userTurnAnimation, animationTimer);
-    setTimeout( () => {
+    setTimeout(() => {
         orangeDiv.addEventListener('click', passTurn);
     }, (animationTimer + 1700));
 }
