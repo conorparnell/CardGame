@@ -5,8 +5,13 @@ body {
     margin: 0;
     padding: 0;
     transition: 0.2s;
-    /* font-family: 'Noto Serif Thai', serif; */
     font-family: 'Bree Serif', serif;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
 }
 
 header {
@@ -147,7 +152,7 @@ h1 {
 
 .card-img {
     display: flex;
-    background-color: darkgrey;
+    background-color: rgb(255, 255, 255);
     height: 1fr;
     width: 1fr;
     grid-area: card-img;
@@ -462,4 +467,8 @@ main {
     width: 1.2em;
     color: white;
     font-family:'Times New Roman', Times, serif
+  }
+
+  #topbar div p {
+      font-size: 1em;
   }

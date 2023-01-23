@@ -854,7 +854,10 @@ function loadDecks() {
     rivalRemainingDeck = Array.from(rivalDeck);
 }
 
+const orangeDiv = document.getElementById("something");
 function startGame() {
+    
+    orangeDiv.addEventListener('click', passTurn); //turn on end turn button
     loadDecks();
     //GAME LOOP:
     //while (gameOver) {
@@ -1235,8 +1238,7 @@ function clearScreen() {
 
 
 
-const orangeDiv = document.getElementById("something");
-orangeDiv.addEventListener('click', passTurn);
+
 //const greenDiv = document.getElementById("options");
 //greenDiv.addEventListener('click', clearBoard);
 const greyDiv = document.getElementById("placeholder");
@@ -1326,6 +1328,7 @@ function updateAllStats() {
 }
 
 function checkGameOver() {
+    orangeDiv.removeEventListener('click', passTurn);
     if (userBones >= 30) {
         scrollUpAnimation("You win!");
         clearBoard();
