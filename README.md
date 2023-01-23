@@ -1,5 +1,5 @@
 # PeatBone - 
-A simple JavaScript card game about digging bones out of a peat bog, with some Irish folklore thrown in. Inspired by the Ooblets dance battle system. Work in progress.
+A simple JavaScript card game about digging bones out of a peat bog, with some Irish folklore thrown in. Inspired by the Ooblets dance battle system.
 
 ## Instructions:
 In the way many Irish tales go, you've found yourself in a competition. Your goal is to dig 30 bones out of the peat bog before your rival does. Lucky for you, one of four Irish aspects will lend you a hand. 

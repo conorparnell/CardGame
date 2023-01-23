@@ -362,6 +362,27 @@ main {
     }
   }
 
+
+.halfscreen {
+        margin-top: 10%;
+        animation-name: halfslide;
+      }
+      
+    @keyframes halfslide {
+        from {
+          margin-top: 100%;
+          height: 300%;
+          border-color: rgb(255, 0, 0);
+          color: rgb(255, 0, 0);
+          filter: blur(1.5rem);
+        }
+      
+    to {
+          margin-top: 10%;
+          border-color: black;
+    }
+}
+
 .splash {
     display: flex;
     align-items: flex-start;

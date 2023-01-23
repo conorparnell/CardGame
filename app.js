@@ -302,10 +302,10 @@ function devilsCoin() {
     if (coinFlip % 2 == 0) {
         steal(calculateBones(10));
         if (userTurn) {
-            scrollUpAnimation("The Devil favors you!");
+            scrollUpAnimation("The Devil favors you!", 1);
             setTimeout(clearScreen, 1700);
         } else {
-            scrollUpAnimation("The Devil scorns you!");
+            scrollUpAnimation("The Devil scorns you!", 1);
             setTimeout(clearScreen, 1700);
         }
     } else {
@@ -318,10 +318,10 @@ function devilsCoin() {
             reduce(calculateBones(10));
         }
         if (userTurn) {
-            scrollUpAnimation("The Devil scorns you!");
+            scrollUpAnimation("The Devil scorns you!", 1);
             setTimeout(clearScreen, 1700);
         } else {
-            scrollUpAnimation("The Devil favors you!");
+            scrollUpAnimation("The Devil favors you!", 1);
             setTimeout(clearScreen, 1700);
         }
     }
@@ -1121,7 +1121,7 @@ function calculateBones(num) {
 
 
 
-
+let animationTimer = 0;
 
 //Enemy turn
 function rivalTurn() {
@@ -1136,7 +1136,7 @@ function rivalTurn() {
     drawCards(startingHandSize);
     console.log("cards are drawn");
     console.log(rivalHand);
-    let animationTimer = 0;
+    animationTimer = 0;
     for (j = 0; j < 2; j++) { //go through twice just in case of gaining brawn.
         for (i = 0; i < rivalHand.length; i++) {
             console.log(completeCardList[rivalHand[i]].cardName + " is next up");
@@ -1164,14 +1164,88 @@ function rivalTurn() {
     }
     rivalHand = [];
     console.log("rival hand is flushed");
-
-    console.log("userturn is on");
     updateAllStats();
     setTimeout(userTurnAnimation, animationTimer);
     setTimeout(() => {
         orangeDiv.addEventListener('click', passTurn);
     }, (animationTimer + 1700));
 }
+
+function rivalTurnInitialize() {
+    userTurn = false;
+    console.log("userturn is off");
+    refillDecks();
+    console.log("Decks are refilled");
+    clearBoard();
+    console.log("board is cleared");
+    refillBrawn();
+    console.log("brawn is refilled");
+    drawCards(startingHandSize);
+    console.log("cards are drawn");
+    console.log(rivalHand);
+    animationTimer = 0;
+    console.log("animation timer is reset");
+}
+
+function rivalPlayCard(id) {
+    console.log("Rival pays " + completeCardList[id].cardCost + " brawn");
+    rivalBrawn -= completeCardList[id].cardCost;
+    displayRivalCard(id, animationTimer);
+    console.log("card is displayed in " + animationTimer + " miliseconds");
+    let delay = 0; //normal cards
+    if (id == 12) { //shapeshift delay
+        delay = 3000;
+    }
+    setTimeout(() => {
+        playCard(id, false);
+        console.log("card is actually played");
+        console.log("rival has " + rivalBrawn + " brawn");
+        console.log("Rival has " + rivalBones + " bones");
+        updateAllStats();
+        console.log("stats are updated");
+        console.log("checking hand again....");
+        setTimeout( ()=> {
+            checkRivalHand();
+        }, delay);
+
+    }, animationTimer + 900);
+    console.log(animationTimer);
+    console.log(rivalHand);
+}
+
+
+function checkRivalHand() { //WORKING
+    for (i = 0; i < rivalHand.length; i++) {
+        console.log(completeCardList[rivalHand[i]].cardName + " is next up");
+        console.log("checking if user has enough brawn to pay: " + completeCardList[rivalHand[i]].cardCost)
+        if (checkCost(completeCardList[rivalHand[i]].cardCost)) {
+            console.log("user can pay the brawn cost");
+            console.log("user 'plays' the card in " + animationTimer + " miliseconds");
+            rivalPlayCard(completeCardList[rivalHand[i]].cardId);
+            if (animationTimer < 2000) {
+                console.log("increasing time limiter");
+                animationTimer += 3000;
+            }
+            console.log("timer increased to " + animationTimer);
+            rivalHand.splice(i, 1);
+            console.log("card is removed from hand");
+            return;
+        }
+    }
+    console.log("no cards playable - ending turn");
+    endRivalTurn();
+}
+
+function endRivalTurn() { //WORKING
+    rivalHand = [];
+    console.log("rival hand is flushed");
+    updateAllStats();
+    setTimeout(userTurnAnimation, animationTimer);
+    setTimeout(() => {
+        orangeDiv.addEventListener('click', passTurn);
+    }, (animationTimer + 1700));
+}
+
 
 function clearBoard() {
     let allCards = document.querySelectorAll(".card");
@@ -1196,7 +1270,8 @@ function passTurn() {
     clearBoard();
     orangeDiv.removeEventListener('click', passTurn);
     rivalTurnAnimation();
-    setTimeout(rivalTurn, 1700);
+    rivalTurnInitialize();
+    setTimeout(checkRivalHand, 1700);
 }
 
 function userTurnAnimation() {
@@ -1211,10 +1286,13 @@ function userTurnAnimation() {
     userTurn = true;
 }
 
-function scrollUpAnimation(text) {
+function scrollUpAnimation(text, b=0) {
     clearBoard();
     const newScreen = document.createElement("div");
     newScreen.classList.add("screen");
+    if (b > 0 ) {
+        newScreen.classList.add("halfscreen");
+    }
     newScreen.innerText = text;
 
     const gameTable = document.getElementById("gametable");
