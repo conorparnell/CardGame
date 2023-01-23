@@ -1315,11 +1315,13 @@ function clearScreen() {
 }
 
 
+function showInstruction(){
+    window.open('https://github.com/conorparnell/PeatBone/blob/main/README.md', '_blank');
+}
 
-
-//const greenDiv = document.getElementById("options");
-//greenDiv.addEventListener('click', clearBoard);
-const greyDiv = document.getElementById("placeholder");
+const greenDiv = document.getElementById("instructions");
+greenDiv.addEventListener('click', showInstruction);
+const greyDiv = document.getElementById("restart");
 greyDiv.addEventListener('click', restartGame)
 
 function restartGame() {

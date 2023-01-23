@@ -33,7 +33,7 @@ h1 {
 }
 
 
-#options {
+#instructions {
     background-color: green;
     height: 100px;
     width: 100px;
@@ -47,7 +47,7 @@ h1 {
     border-radius: 50%;
 }
 
-#placeholder {
+#restart {
     background-color: grey;
     height: 100px;
     width: 100px;
