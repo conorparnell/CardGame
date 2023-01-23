@@ -1328,15 +1328,16 @@ function updateAllStats() {
 }
 
 function checkGameOver() {
-    orangeDiv.removeEventListener('click', passTurn);
     if (userBones >= 30) {
         scrollUpAnimation("You win!");
+        orangeDiv.removeEventListener('click', passTurn);
         clearBoard();
         setTimeout(clearBoard, 500);
         setTimeout(clearBoard, 1000);
         console.log("WINNER");
     } else if (rivalBones >= 30) {
         scrollUpAnimation("You lose!!!");
+        orangeDiv.removeEventListener('click', passTurn);
         clearBoard();
         setTimeout(clearBoard, 500);
         setTimeout(clearBoard, 1000);
