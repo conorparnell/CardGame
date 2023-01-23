@@ -227,7 +227,7 @@ main {
 }
 
 .rival-card .card-img {
-    outline: 100px solid rgba(80, 0, 80, 0.0) !important;
+    outline: 100px solid rgba(00, 0, 00, 0.0) !important;
     outline-offset: -100px;
     overflow: hidden;
     position: relative;
@@ -238,16 +238,34 @@ main {
     color: gold;
 }
 
-.morrigan .card-img {
-        outline: 100px solid rgba(80, 0, 80, 0.3) !important;
-        outline-offset: -100px;
-        overflow: hidden;
-        position: relative;
-}
+
 
 .croghan {
     background-color: rgb(95, 29, 12);
     color: gold;
+}
+
+
+
+.chulainn {
+    background-color: rgb(3, 80, 0);
+    color: gold;
+}
+
+
+
+.jack {
+    background-color: rgb(180, 78, 10);
+    color: gold;
+}
+
+/*
+
+.morrigan .card-img {
+    outline: 100px solid rgba(80, 0, 80, 0.3) !important;
+    outline-offset: -100px;
+    overflow: hidden;
+    position: relative;
 }
 
 .croghan .card-img {
@@ -257,21 +275,11 @@ main {
     position: relative;
 }
 
-.chulainn {
-    background-color: rgb(3, 80, 0);
-    color: gold;
-}
-
 .chulainn .card-img {
     outline: 100px solid rgba(3, 80, 0, 0.3) !important;
     outline-offset: -100px;
     overflow: hidden;
     position: relative;
-}
-
-.jack {
-    background-color: rgb(180, 78, 10);
-    color: gold;
 }
 
 .jack .card-img {
@@ -281,7 +289,7 @@ main {
     position: relative;
 }
 
-
+*/
 
 #user-score-bar {
     position: fixed;
@@ -453,5 +461,5 @@ main {
     height: 1.2em;
     width: 1.2em;
     color: white;
-    font-family: serif;
+    font-family:'Times New Roman', Times, serif
   }

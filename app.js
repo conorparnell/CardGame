@@ -52,9 +52,9 @@ Basic deck:
 
 the Morrígan:
 
-10 - <the Morrigan> Morrígan's Shriek - gives 2 fear x2
+10 - <the Morrigan> Morrígan's Shriek - gives 2 fear x1
 11 - <the Morrigan> Raven's Foresight - draw 2 x2
-12 - <the Morrigan> Shapeshift - steal and play a card of your opponent's aspect
+12 - <the Morrigan> Shapeshift - steal and play a card of your opponent's aspect x2
 
 Old Croghan:
 
@@ -295,18 +295,6 @@ function playCard(id, text) {
             }
     }
 }
-
-/*
-case :
-    if (text) {
-        return ;
-        break;
-    } else {
-        
-        break;
-    }
-
-*/
 
 function devilsCoin() {
     let coinFlip = Math.ceil((Math.random() * 100));
@@ -585,7 +573,7 @@ const completeCardList = [
         cardImg: "img/shriek.jpg",
         cardText: "Your opponent gains 2\n fear.",
         cardType: "morrigan",
-        cardCopies: 2,
+        cardCopies: 1,
     },
     {
         cardId: 11,
@@ -599,11 +587,11 @@ const completeCardList = [
     {
         cardId: 12,
         cardName: "Shapeshift",
-        cardCost: 3,
+        cardCost: 2,
         cardImg: "img/shapeshift.jpg",
         cardText: "Play a random Aspect\n card from your \nopponent's deck",
         cardType: "morrigan",
-        cardCopies: 1
+        cardCopies: 2
     },
     //Old Croghan:
     {
@@ -684,7 +672,7 @@ const completeCardList = [
         cardId: 21,
         cardName: "Donn Cuailnge",
         cardCost: 0,
-        cardImg: "img/donn",
+        cardImg: "img/donn.jpg",
         cardText: "The Brown Bull\n doubles your cheer.",
         cardType: "chulainn",
         cardCopies: 0
@@ -1177,6 +1165,9 @@ function rivalTurn() {
     console.log("userturn is on");
     updateAllStats();
     setTimeout(userTurnAnimation, animationTimer);
+    setTimeout( () => {
+        orangeDiv.addEventListener('click', passTurn);
+    }, (animationTimer + 1700));
 }
 
 function clearBoard() {
@@ -1200,6 +1191,7 @@ function tempCheck() {
 
 function passTurn() {
     clearBoard();
+    orangeDiv.removeEventListener('click', passTurn);
     rivalTurnAnimation();
     setTimeout(rivalTurn, 1700);
 }
@@ -1240,6 +1232,8 @@ function clearScreen() {
     let screen = document.querySelectorAll(".screen");
     screen.forEach(element => element.remove());
 }
+
+
 
 const orangeDiv = document.getElementById("something");
 orangeDiv.addEventListener('click', passTurn);
@@ -1383,7 +1377,7 @@ function displayRivalCard(id, delay) {
     //card image
     let cardImg = document.createElement("div");
     cardImg.classList.add("card-img");
-    
+
     let cardImage = document.createElement("img");
     cardImage.classList.add("card-image");
     cardImage.src = completeCardList[id].cardImg;
@@ -1529,16 +1523,30 @@ function shapeShift() {
 
         function changeCardClass() {
             blankShiftText();
-            switch (rivalSelection) {
-                case "o":
-                    shape.classList.replace("morrigan", "croghan");
-                    break;
-                case "c":
-                    shape.classList.replace("morrigan", "chulainn");
-                    break;
-                case "j":
-                    shape.classList.replace("morrigan", "jack");
-                    break;
+            if (userTurn) {
+                switch (rivalSelection) {
+                    case "o":
+                        shape.classList.replace("morrigan", "croghan");
+                        break;
+                    case "c":
+                        shape.classList.replace("morrigan", "chulainn");
+                        break;
+                    case "j":
+                        shape.classList.replace("morrigan", "jack");
+                        break;
+                }
+            } else {
+                switch (userSelection) {
+                    case "o":
+                        shape.classList.replace("morrigan", "croghan");
+                        break;
+                    case "c":
+                        shape.classList.replace("morrigan", "chulainn");
+                        break;
+                    case "j":
+                        shape.classList.replace("morrigan", "jack");
+                        break;
+                }
             }
         }
 
@@ -1547,21 +1555,40 @@ function shapeShift() {
             const chulainnCards = [17, 18, 19];
             const jackCards = [22, 23, 24];
             let cardPicker = Math.floor(Math.random() * 3);
+            if (userTurn) {
 
-            switch (rivalSelection) {
-                case "o":
-                    chosenCard = croghanCards[cardPicker];
-                    morphText();
-                    break;
-                case "c":
-                    chosenCard = chulainnCards[cardPicker];
-                    morphText();
-                    break;
-                case "j":
-                    chosenCard = jackCards[cardPicker];
-                    morphText();
-                    break;
+                switch (rivalSelection) {
+                    case "o":
+                        chosenCard = croghanCards[cardPicker];
+                        morphText();
+                        break;
+                    case "c":
+                        chosenCard = chulainnCards[cardPicker];
+                        morphText();
+                        break;
+                    case "j":
+                        chosenCard = jackCards[cardPicker];
+                        morphText();
+                        break;
+                }
+            } else {
+                switch (userSelection) {
+                    case "o":
+                        chosenCard = croghanCards[cardPicker];
+                        morphText();
+                        break;
+                    case "c":
+                        chosenCard = chulainnCards[cardPicker];
+                        morphText();
+                        break;
+                    case "j":
+                        chosenCard = jackCards[cardPicker];
+                        morphText();
+                        break;
+                }
             }
+
+
 
             function morphText() {
                 console.log(chosenCard);
