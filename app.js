@@ -22,7 +22,7 @@ const basicDeck = 10;
 const morriganDeck = [10, 10, 11, 11, 12];
 const croghanDeck = [13, 13, 13, 13, 14, 14, 15, 15];
 const chulainnDeck = [17, 17, 18, 18, 19];
-const jackDeck = [22, 22, 22, 23, 23, 24];
+const jackDeck = [22, 22, 23, 23, 24];
 
 //
 
@@ -39,43 +39,43 @@ CARD IDs:
 
 Basic deck:
 
-0 - Dredge
-1 - Excavate
-2 - Exhume
-3 - Yoink
-4 - Sláinte!
-5 - Banshee Wail
-6 - Will-o'-the-Wisp
-7 - Bone Jump
-8 - Hearty Haul
-9 - Gold Teeth
+    0 - Dredge
+    1 - Excavate
+    2 - Exhume
+    3 - Yoink
+    4 - Sláinte!
+    5 - Banshee Wail
+    6 - Will-o'-the-Wisp
+    7 - Bone Jump
+    8 - Hearty Haul
+    9 - Gold Teeth
 
 the Morrígan:
 
-10 - <the Morrigan> Morrígan's Shriek - gives 2 fear x1
-11 - <the Morrigan> Raven's Foresight - draw 2 x2
-12 - <the Morrigan> Shapeshift - steal and play a card of your opponent's aspect x2
+    10 - <the Morrigan> Morrígan's Shriek - gives 2 fear x1
+    11 - <the Morrigan> Raven's Foresight - draw 2 x2
+    12 - <the Morrigan> Shapeshift - steal and play a card of your opponent's aspect x2
 
 Old Croghan:
 
-13 - <Old Croghan> Sphagnum Bloom - gain 1 brawn draw 1 card x4 - 0
-14 - <Old Croghan> Bog Rot - put 3 Rot cards in your opponents deck x 2
-15 - <Old Croghan> Fisticuffs - Gain 2 bones for each brawn you have (calculated before playing) x 2
-16 - <Old Croghan> Rot - Useless card (Costs 10) x 0
+    13 - <Old Croghan> Sphagnum Bloom - gain 1 brawn draw 1 card x4 - 0
+    14 - <Old Croghan> Bog Rot - put 3 Rot cards in your opponents deck x 2
+    15 - <Old Croghan> Fisticuffs - Gain 2 bones for each brawn you have (calculated before playing) x 2
+    16 - <Old Croghan> Rot - Useless card (Costs 10) x 0
 
 Cú Chulainn:
 
-17 - <Cú Chulainn> Battlecry - gain 2 cheer x3
-18 - <Cú Chulainn> Cattle Raid -  Math.ceil(Math.random() * 4); x 2
-19 - <Cú Chulainn> Gae Bolg - Opponent loses half their bones rounded up x 1
-20 - <Cú Chulainn> - Finnbhennach - Replenish your brawn (costs 0) x 0
-21 - <Cú Chulainn> - Donn Cuailnge - Double your cheer (costs 0) x 0
+    17 - <Cú Chulainn> Battlecry - gain 2 cheer x3
+    18 - <Cú Chulainn> Cattle Raid -  Math.ceil(Math.random() * 4); x 2
+    19 - <Cú Chulainn> Gae Bolg - Opponent loses half their bones rounded up x 1
+    20 - <Cú Chulainn> - Finnbhennach - Replenish your brawn (costs 0) x 0
+    21 - <Cú Chulainn> - Donn Cuailnge - Double your cheer (costs 0) x 0
 
 Stingy Jack:
 
-22 - <Stingy Jack> Trick or Treat - Steal 1 Cheer, Give 1 Fear x 3
-23 - <Stingy Jack> Grinning Turnip - Starting brawn increased by 1, (+1 brawn); x 2
-24 - <Stingy Jack> Devil's Coin - Random player steals 10 bones - Math.ceil(Math.random() * 4);
+    22 - <Stingy Jack> Trick or Treat - Gain 1 Cheer, Give 1 Fear x 2
+    23 - <Stingy Jack> Grinning Turnip - Starting brawn increased by 1, (+1 brawn); x 2
+    24 - <Stingy Jack> Devil's Coin - Random player steals 10 bones - Math.ceil(Math.random() * 4);
 
 STRETCH GOAL: 
 THE POOKA
@@ -154,7 +154,7 @@ function playCard(id, text) {
             }
         case 8:
             if (text) {
-                return `Find ${calculateBones(2)} bones. \nRemove 1 fear.`;
+                return `Find ${calculateBones(2)} bones. \nLose 1 fear.`;
                 break;
             } else {
                 gain(calculateBones(2));
@@ -685,7 +685,7 @@ const completeCardList = [
         cardImg: "img/trick.jpg",
         cardText: "Gain 1 cheer.\n Your opponent gains 1\n fear.",
         cardType: "jack",
-        cardCopies: 3
+        cardCopies: 2
     },
     {
         cardId: 23,
