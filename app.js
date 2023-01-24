@@ -306,18 +306,26 @@ function devilsCoin() {
             setTimeout(clearScreen, 1700);
         }
     } else {
-        if (userBones < calculateBones(10)) {
-            let bones = userBones;
-            gain(bones);
-            reduce(bones);
-        } else {
-            gain(calculateBones(10));
-            reduce(calculateBones(10));
-        }
         if (userTurn) {
+            if (userBones < calculateBones(10)) {
+                let bones = userBones;
+                userBones -= bones;
+                rivalBones += bones;
+            } else {
+                userBones -= calculateBones(10);
+                rivalBones += calculateBones(10);
+            }
             scrollUpAnimation("The Devil scorns you!", 1);
             setTimeout(clearScreen, 1700);
         } else {
+            if (rivalBones < calculateBones(10)) {
+                let bones = rivalBones;
+                gain(bones);
+                reduce(bones);
+            } else {
+                gain(calculateBones(10));
+                reduce(calculateBones(10));
+            }
             scrollUpAnimation("The Devil favors you!", 1);
             setTimeout(clearScreen, 1700);
         }
