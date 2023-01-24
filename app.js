@@ -3,7 +3,6 @@ const startingHandSize = 4;
 let startingBrawn = 4;
 const winningScore = 30;
 let userTurn = true; //boolean for whose turn it is. user = true, rival = false;
-let turnOver = false; //boolean for if the user is done with their turn
 
 //USER setup
 let userBones = 0;
@@ -23,10 +22,6 @@ const morriganDeck = [10, 10, 11, 11, 12];
 const croghanDeck = [13, 13, 13, 13, 14, 14, 15, 15];
 const chulainnDeck = [17, 17, 18, 18, 19];
 const jackDeck = [22, 22, 23, 23, 24];
-
-//
-
-
 
 //initialize scorekeeping
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -52,33 +47,34 @@ Basic deck:
 
 the Morrígan:
 
-    10 - <the Morrigan> Morrígan's Shriek - gives 2 fear x1
-    11 - <the Morrigan> Raven's Foresight - draw 2 x2
-    12 - <the Morrigan> Shapeshift - steal and play a card of your opponent's aspect x2
+    10 - Morrígan's Shriek
+    11 - Raven's Foresight
+    12 - Shapeshift
 
 Old Croghan:
 
-    13 - <Old Croghan> Sphagnum Bloom - gain 1 brawn draw 1 card x4 - 0
-    14 - <Old Croghan> Bog Rot - put 3 Rot cards in your opponents deck x 2
-    15 - <Old Croghan> Fisticuffs - Gain 2 bones for each brawn you have (calculated before playing) x 2
-    16 - <Old Croghan> Rot - Useless card (Costs 10) x 0
+    13 - Sphagnum Bloom
+    14 - Bog Rot
+    15 - Fisticuffs
+    16 - Rot
 
 Cú Chulainn:
 
-    17 - <Cú Chulainn> Battlecry - gain 2 cheer x3
-    18 - <Cú Chulainn> Cattle Raid -  Math.ceil(Math.random() * 4); x 2
-    19 - <Cú Chulainn> Gae Bolg - Opponent loses half their bones rounded up x 1
-    20 - <Cú Chulainn> - Finnbhennach - Replenish your brawn (costs 0) x 0
-    21 - <Cú Chulainn> - Donn Cuailnge - Double your cheer (costs 0) x 0
+    17 - Battlecry
+    18 - Cattle Raid
+    19 - Gae Bolg
+    20 - Finnbhennach
+    21 - Donn Cuailnge
 
 Stingy Jack:
 
-    22 - <Stingy Jack> Trick or Treat - Gain 1 Cheer, Give 1 Fear x 2
-    23 - <Stingy Jack> Grinning Turnip - Starting brawn increased by 1, (+1 brawn); x 2
-    24 - <Stingy Jack> Devil's Coin - Random player steals 10 bones - Math.ceil(Math.random() * 4);
+    22 - Trick or Treat
+    23 - Grinning Turnip
+    24 - Devil's Coin
 
-STRETCH GOAL: 
-THE POOKA
+Possible future Aspects:
+The Pooka
+Stephen Dedalus & Leopold Bloom
 
 */
 
@@ -301,6 +297,7 @@ function devilsCoin() {
     console.log(coinFlip);
     if (coinFlip % 2 == 0) {
         steal(calculateBones(10));
+        console.log
         if (userTurn) {
             scrollUpAnimation("The Devil favors you!", 1);
             setTimeout(clearScreen, 1700);
@@ -855,25 +852,13 @@ function loadDecks() {
 }
 
 const orangeDiv = document.getElementById("something");
-function startGame() {
 
+function startGame() {
     orangeDiv.addEventListener('click', passTurn); //turn on end turn button
     loadDecks();
-    //GAME LOOP:
-    //while (gameOver) {
-    // while (userTurn) {
-    //User Turn
-    //Brawn refilled
     refillBrawn();
-    //Draw cards
     drawCards(startingHandSize);
-    //display hand
     displayHand();
-    //while(!turnOver){
-    //do nothing, play cards, then hit pass turn
-    //}
-    //play cards
-    //endTurn -> remove all card elements, flush hand, refill remaining deck
 }
 
 
@@ -915,12 +900,10 @@ function displayCard(id) {
     let cardImg = document.createElement("div");
     cardImg.classList.add("card-img");
 
-    //TEST IN PROGRESS/////////////////////////////////////////////////////////////////
     let cardImage = document.createElement("img");
     cardImage.classList.add("card-image");
     cardImage.src = completeCardList[id].cardImg;
     cardImg.appendChild(cardImage);
-    //TODO: make art lol
 
     //card body
     let cardBody = document.createElement("div");
@@ -975,8 +958,7 @@ function checkCost(cost) {
     }
 }
 
-
-
+//pays Brawn cost of card
 function payCost(cost) {
     if (userTurn) {
         userBrawn -= cost;
@@ -985,7 +967,7 @@ function payCost(cost) {
     }
 }
 
-
+//removes card after playing it
 function removeCard(e) {
     let element = e.currentTarget;
     element.remove();
@@ -1016,10 +998,6 @@ function fillDecks() {
 
 }
 
-function determineDecks() {
-    return [1];
-}
-
 //cards are drawn depending on whose turn it is 
 function drawCards(num) {
     for (i = 0; i < num; i++) {
@@ -1048,22 +1026,6 @@ function refillBrawn() {
     }
 }
 
-
-
-
-
-
-
-//returns false until a score reaching winningScore
-function gameOver() {
-    if (userBones >= winningScore || rivalBones >= winningScore) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-
 //calculates bonuses based on fear and cheer
 function calculateBones(num) {
     let bones = num;
@@ -1090,86 +1052,9 @@ function calculateBones(num) {
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-//deck is refilled
-//board is cleared
-//brawn is refilled
-//draw hand
-//initalize array of playable cards
-//initialize animation timer
-//initialize brawn counter
-//loop through hand
-//push playable cards into array
-//splice out cards pushed
-//time-lock playing of first card
-//display card w/ animation timer
-//pay brawn w/  animation timer + 1000
-//play card w/ animation timer + 1000
-//redirect to second card function
-
-
-
-
-
 
 let animationTimer = 0;
 
-//Enemy turn
-function rivalTurn() {
-    userTurn = false;
-    console.log("userturn is off");
-    refillDecks();
-    console.log("Decks are refilled");
-    clearBoard();
-    console.log("board is cleared");
-    refillBrawn();
-    console.log("brawn is refilled");
-    drawCards(startingHandSize);
-    console.log("cards are drawn");
-    console.log(rivalHand);
-    animationTimer = 0;
-    for (j = 0; j < 2; j++) { //go through twice just in case of gaining brawn.
-        for (i = 0; i < rivalHand.length; i++) {
-            console.log(completeCardList[rivalHand[i]].cardName + " is next up");
-            if (checkCost(completeCardList[rivalHand[i]].cardCost)) {
-                console.log(`Rival plays ${completeCardList[rivalHand[i]].cardName}`);
-                rivalBrawn -= completeCardList[rivalHand[i]].cardCost;
-                console.log("Rival pays " + completeCardList[rivalHand[i]].cardCost + " brawn");
-                displayRivalCard(rivalHand[i], animationTimer);
-                playCard(rivalHand[i], false);
-
-                updateAllStats();
-                console.log("rival has " + rivalBrawn + " brawn");
-                console.log("Rival has " + rivalBones + " bones");
-                setTimeout(tempCheck, (animationTimer + 1000));
-                animationTimer += 3000;
-                console.log(animationTimer);
-                rivalHand.splice(i, 1);
-                console.log(rivalHand);
-                i--; //decrement to match the index lost
-            } else {
-                console.log(`Rival can't play ${completeCardList[rivalHand[i]].cardName}`);
-                console.log(rivalHand);
-            }
-        }
-    }
-    rivalHand = [];
-    console.log("rival hand is flushed");
-    updateAllStats();
-    setTimeout(userTurnAnimation, animationTimer);
-    setTimeout(() => {
-        orangeDiv.addEventListener('click', passTurn);
-    }, (animationTimer + 1700));
-}
 
 function rivalTurnInitialize() {
     userTurn = false;
@@ -1262,9 +1147,7 @@ function unfadeBoard() {
     allCards.forEach(element => element.classList.remove('fade'));
 }
 
-function tempCheck() {
-    console.log("casting NOW");
-}
+
 
 function passTurn() {
     clearBoard();
@@ -1281,9 +1164,10 @@ function userTurnAnimation() {
 
     const gameTable = document.getElementById("gametable");
     gameTable.appendChild(newScreen);
-    setTimeout(clearScreen, 1700);
+    setTimeout(() => {
+        clearScreen();
+    }, 1700);
     setTimeout(restartTurn, 1700);
-    userTurn = true;
 }
 
 function scrollUpAnimation(text, b=0) {
@@ -1336,6 +1220,9 @@ function restartTurn() {
     refillBrawn();
     drawCards(startingHandSize);
     displayHand();
+    setTimeout( () => {
+        userTurn = true;
+    }, 200);
 
 }
 
@@ -1411,14 +1298,13 @@ function checkGameOver() {
     if (userBones >= 30) {
         scrollUpAnimation("You win!");
         orangeDiv.removeEventListener('click', passTurn);
-        clearBoard();
+        setTimeout(clearBoard, 500);
         setTimeout(clearBoard, 500);
         setTimeout(clearBoard, 1000);
         console.log("WINNER");
     } else if (rivalBones >= 30) {
         scrollUpAnimation("You lose!!!");
         orangeDiv.removeEventListener('click', passTurn);
-        clearBoard();
         setTimeout(clearBoard, 500);
         setTimeout(clearBoard, 1000);
         removeRivalCard();
@@ -1430,12 +1316,7 @@ function checkGameOver() {
     }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 function displayRivalCard(id, delay) {
     //new card
