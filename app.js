@@ -1145,6 +1145,7 @@ function fadeBoard() {
 function unfadeBoard() {
     let allCards = document.querySelectorAll(".card");
     allCards.forEach(element => element.classList.remove('fade'));
+    displayHand();
 }
 
 
