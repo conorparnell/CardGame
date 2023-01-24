@@ -1089,7 +1089,7 @@ function rivalPlayCard(id) {
         updateAllStats();
         console.log("stats are updated");
         console.log("checking hand again....");
-        setTimeout( ()=> {
+        setTimeout(() => {
             checkRivalHand();
         }, delay);
 
@@ -1164,17 +1164,19 @@ function userTurnAnimation() {
 
     const gameTable = document.getElementById("gametable");
     gameTable.appendChild(newScreen);
+    console.log("text scrolls");
     setTimeout(() => {
         clearScreen();
+        console.log("screen is cleared");
     }, 1700);
-    setTimeout(restartTurn, 1700);
+    setTimeout(restartTurn, 1800);
 }
 
-function scrollUpAnimation(text, b=0) {
+function scrollUpAnimation(text, b = 0) {
     clearBoard();
     const newScreen = document.createElement("div");
     newScreen.classList.add("screen");
-    if (b > 0 ) {
+    if (b > 0) {
         newScreen.classList.add("halfscreen");
     }
     newScreen.innerText = text;
@@ -1199,7 +1201,7 @@ function clearScreen() {
 }
 
 
-function showInstruction(){
+function showInstruction() {
     window.open('https://github.com/conorparnell/PeatBone/blob/main/README.md', '_blank');
 }
 
@@ -1213,6 +1215,7 @@ function restartGame() {
 }
 
 function restartTurn() {
+    userTurn = true;
     let allCards = document.querySelectorAll(".card");
     allCards.forEach(element => element.remove());
     userHand = [];
@@ -1220,10 +1223,6 @@ function restartTurn() {
     refillBrawn();
     drawCards(startingHandSize);
     displayHand();
-    setTimeout( () => {
-        userTurn = true;
-    }, 200);
-
 }
 
 function updateScore() {
